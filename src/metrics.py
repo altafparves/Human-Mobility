@@ -7,3 +7,4 @@ Responsibilities:
 - Conduct matched-weekday Nataru holiday shockwave comparisons while isolating the Jan 1 sample break.
 - Compute cluster-robust confidence intervals and hourly kapanewon diurnal summaries (n_maids, n_pings/n_maids).
 """
+

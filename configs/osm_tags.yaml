@@ -46,3 +46,4 @@ facility_categories:
     highway: ["bus_stop"]
     public_transport: ["station", "platform", "stop_position"]
     railway: ["station", "halt"]
+

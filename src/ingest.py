@@ -6,3 +6,4 @@ Responsibilities:
 - Query OpenStreetMap via Overpass API (historical snapshot 2021-12-01 + current fallback).
 - Audit DIY landmark coverage (UGM, UNY, Ambarrukmo Plaza, Pakuwon Mall, RSUP Dr. Sardjito, Malioboro).
 """
+

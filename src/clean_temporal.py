@@ -7,3 +7,4 @@ Responsibilities:
 - Build full expected cell-date calendar and calculate weekday/weekend publication coverage.
 - Apply >= 90% coverage filter (with 80% and 95% sensitivity flags) and export Silver Parquet tables.
 """
+
