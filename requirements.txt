@@ -1,0 +1,25 @@
+# Core Data Engineering & Storage
+pandas>=2.1.0
+numpy>=1.26.0
+pyarrow>=14.0.0
+duckdb>=0.10.0
+pyyaml>=6.0.1
+requests>=2.31.0
+
+# Geospatial Processing
+geopandas>=0.14.0
+shapely>=2.0.2
+pyproj>=3.6.1
+rtree>=1.1.0
+
+# Visualization & Interactive Mapping
+matplotlib>=3.8.0
+seaborn>=0.13.0
+plotly>=5.18.0
+folium>=0.15.0
+mapclassify>=2.6.0
+
+# Notebooks & Testing
+jupyter>=1.0.0
+ipykernel>=6.28.0
+pytest>=8.0.0

@@ -1,0 +1,48 @@
+# OSM Facility Taxonomy & Pipeline Configuration
+project:
+  name: "City Magnets Yogyakarta"
+  crs_wgs84: "EPSG:4326"
+  crs_utm: "EPSG:32749" # UTM Zone 49S
+  grid_size_meters: 500
+
+overpass:
+  endpoint: "https://overpass-api.de/api/interpreter"
+  historical_date: "2021-12-01T00:00:00Z"
+  bbox:
+    south: -8.21
+    west: 110.00
+    north: -7.54
+    east: 110.84
+
+analysis:
+  primary_start: "2021-12-01"
+  primary_end: "2022-02-28"
+  anomalous_dates:
+    - "2022-03-08"
+  nataru_window:
+    start: "2021-12-24"
+    end: "2022-01-02"
+  sample_breaks:
+    - "2022-01-01"
+    - "2022-02-16"
+  coverage_thresholds:
+    primary: 0.90
+    sensitivity: [0.80, 0.90, 0.95]
+
+facility_categories:
+  education_campus:
+    amenity: ["university", "college"]
+  healthcare_hospital:
+    amenity: ["hospital"]
+    healthcare: ["hospital"]
+  commercial_mall:
+    shop: ["mall", "department_store"]
+  traditional_market:
+    amenity: ["marketplace"]
+  tourism_site:
+    tourism: ["attraction", "museum", "theme_park", "viewpoint", "zoo"]
+    historic: ["castle", "monument", "memorial", "archaeological_site"]
+  transit_hub:
+    highway: ["bus_stop"]
+    public_transport: ["station", "platform", "stop_position"]
+    railway: ["station", "halt"]
