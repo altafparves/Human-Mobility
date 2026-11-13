@@ -73,20 +73,56 @@ Human-Mobility/
 
 ---
 
-## 5. Team Roles & Task Division (4 Members)
+## 5. Team Members, Role Selection & Execution Order (4 Members)
 
-Each of the **4 team members** leads a core technical stage of the data engineering pipeline, while **Storytelling, Slide Deck Design, the 5-Minute eLOK Video, and Repository Documentation** are shared equally by the entire team.
+**Team Members (4 People):**
+* **Altaf**
+* **Akhnaf**
+* **Nalen**
+* **Rafi Busthami**
 
-### Technical Pipeline Roles
+Each member chooses **one dedicated technical role** below, while **Storytelling, Slide Deck Design, the 5-Minute eLOK Video, and Repository Documentation** are shared equally by all 4 members.
 
-| Role | PIC | Pipeline Stage | Key Responsibilities & Deliverables |
-| :--- | :--- | :--- | :--- |
-| **Role 1: Data Ingestion & Temporal Cleaning Lead** | **Altaf** | Bronze $\rightarrow$ Silver (Temporal) | • Build `src/ingest.py` to load JogjaPulse CSVs and query OSM Overpass API (`node`/`way`/`relation`).<br>• Conduct Week 1 DIY landmark audit (UGM, UNY, Amplaz, Pakuwon, Sardjito, Malioboro).<br>• Build `src/clean_temporal.py` to standardize `UTC+7` timestamps, flag `2022-03-08`, compute weekday/weekend publication coverage per cell, and apply the $\ge 90\%$ coverage rule. |
-| **Role 2: Geospatial Engineering & Facility Deduplication Lead** | **Akhnaf** | Silver $\rightarrow$ Gold (Spatial) | • Build `src/spatial_join.py` to reconstruct $500\text{ m} \times 500\text{ m}$ polygons in `EPSG:32749`.<br>• Map OSM tags (`configs/osm_tags.yaml`) into the 6 core facility categories.<br>• Deduplicate overlapping OSM features (point nodes vs. polygons/multi-cell campuses) and run `gpd.sjoin` to classify single-category, mixed-use, and matched baseline cells. |
-| **Role 3: Mobility Analytics & Statistical Modeling Lead** | **Nalen** | Gold (Analytical Metrics) | • Build `src/metrics.py` to compute daily **Published Presence Share (%)** across declared and common-support cells.<br>• Compute cell-level **Weekday-to-Weekend Ratios** (H1–H3) and matched-weekday **Nataru Holiday Comparisons** (explicitly isolating the Jan 1 sample break).<br>• Run cluster-robust resampling/uncertainty intervals, sensitivity checks ($80\%/90\%/95\%$), and hourly *kapanewon* aggregations. |
-| **Role 4: Geospatial Visualization & Interactive Map Lead** | **Rafi Busthami** | Serve & Visual Analytics | • Build `src/visualize.py` & `notebooks/visuals.ipynb` with a unified visual theme.<br>• Create the **Interactive 500m Spatial Map** (Folium/Kepler.gl), **Weekday/Weekend Ratio Bar Chart**, **Nataru Time-Series with Coverage Panel**, and **24-Hour Kapanewon Diurnal Heatmap** in `figures/`. |
+### A. Technical Pipeline Roles (Open for Selection)
 
-### Shared Team Responsibilities (All 4 Members)
+| Role | PIC (Choose Role) | Pipeline Stage | Execution Order & Priority Flag | Key Responsibilities & Deliverables |
+| :--- | :--- | :--- | :--- | :--- |
+| **Role 1: Data Ingestion & Temporal Cleaning Lead** | *[TBD — Open]* | Bronze $\rightarrow$ Silver (Temporal) | ⚡ **START FIRST (Phase 1 Blocker)**<br>🛡️ **Data Quality Foundation** | • Build `src/ingest.py` to load JogjaPulse CSVs and query OSM Overpass API (`node`/`way`/`relation`).<br>• Conduct Week 1 DIY landmark audit (UGM, UNY, Amplaz, Pakuwon, Sardjito, Malioboro).<br>• Build `src/clean_temporal.py` to standardize `UTC+7` timestamps, flag `2022-03-08`, compute weekday/weekend publication coverage per cell, and apply the $\ge 90\%$ coverage rule. |
+| **Role 2: Geospatial Engineering & Facility Deduplication Lead** | *[TBD — Open]* | Silver $\rightarrow$ Gold (Spatial) | ⚡ **START FIRST (Phase 1 Blocker)**<br>🔥 **MOST TECHNICALLY DIFFICULT** | • Build `src/spatial_join.py` to reconstruct $500\text{ m} \times 500\text{ m}$ polygons in `EPSG:32749`.<br>• Map OSM tags (`configs/osm_tags.yaml`) into the 6 core facility categories.<br>• Deduplicate overlapping OSM features (point nodes vs. polygons/multi-cell campuses) and run `gpd.sjoin` to classify single-category, mixed-use, and matched baseline cells. |
+| **Role 3: Mobility Analytics & Statistical Modeling Lead** | *[TBD — Open]* | Gold (Analytical Metrics) | ⏳ **Phase 2**<br>⭐ **MOST IMPORTANT / CRITICAL FOR RESEARCH VALIDITY** | • Build `src/metrics.py` to compute daily **Published Presence Share (%)** across declared and common-support cells.<br>• Compute cell-level **Weekday-to-Weekend Ratios** (H1–H3) and matched-weekday **Nataru Holiday Comparisons** (explicitly isolating the Jan 1 sample break).<br>• Run cluster-robust resampling/uncertainty intervals, sensitivity checks ($80\%/90\%/95\%$), and hourly *kapanewon* aggregations. |
+| **Role 4: Geospatial Visualization & Interactive Map Lead** | *[TBD — Open]* | Serve & Visual Analytics | ⏳ **Phase 3**<br>🎯 **HIGH-IMPACT VISUAL DELIVERABLE** | • Build `src/visualize.py` & `notebooks/visuals.ipynb` with a unified visual theme.<br>• Create the **Interactive 500m Spatial Map** (Folium/Kepler.gl), **Weekday/Weekend Ratio Bar Chart**, **Nataru Time-Series with Coverage Panel**, and **24-Hour Kapanewon Diurnal Heatmap** in `figures/`. |
+
+---
+
+### B. Who Should Work First? (Execution Order & Criticality Guide)
+
+```text
+PHASE 1 (Week 1 - Parallel Upstream Blockers)
+├── Role 1 (Ingestion & Temporal Cleaning) ──┐
+└── Role 2 (Geospatial & OSM Deduplication) ─┴──> Unlocks Silver Layer (data/silver/)
+                                                        │
+PHASE 2 (Week 2 - Core Statistical Engine)              ▼
+└── Role 3 (Mobility Metrics & Statistical Modeling) ──> Unlocks Gold Layer (data/gold/)
+                                                        │
+PHASE 3 (Week 2–3 - Serve & Visual Storytelling)        ▼
+└── Role 4 (Interactive Map & Core Figures) ───────────> Final Charts + Shared 5-Min Video
+```
+
+1. ⚡ **Who Must Work First (Phase 1 — Immediate Parallel Start): Role 1 & Role 2**
+   * **Role 1** and **Role 2** are the upstream blockers and must start in **Week 1 in parallel**.
+   * While **Role 1** cleans the temporal coverage calendar and extracts OSM data, **Role 2** reconstructs the $500\text{ m} \times 500\text{ m}$ `EPSG:32749` grid polygons and builds the OSM facility deduplication logic.
+   * *Parallel preparation for Roles 3 & 4 in Week 1:* While waiting for `data/silver/`, Role 3 writes modular DuckDB/Pandas metric functions on a sample subset, and Role 4 prepares the Folium/Kepler map and chart templates.
+2. 🔥 **Most Technically Difficult Part: Role 2 (Geospatial Engineering & Facility Deduplication)**
+   * OpenStreetMap represents large complexes (such as **UGM** or **RSUP Dr. Sardjito**) as both boundary polygons (`ways`/`relations`) spanning multiple $500\text{ m}$ cells and dozens of internal point `nodes` (faculties, clinics, ATMs).
+   * Merging and deduplicating these in `EPSG:32749` so a single campus isn't counted 50 times—while separating **single-category cells**, **mixed-use cells**, and **spatially matched baseline cells**—is the most complex engineering challenge in the pipeline.
+3. ⭐ **Most Important / Critical Part for Grading: Role 3 (Mobility Analytics & Statistical Modeling)** *(supported by Role 1's coverage filter)*
+   * The JogjaPulse dataset contains two major statistical pitfalls highlighted in the dataset documentation:
+     * **1 January 2022 & 16 February 2022 Sample Discontinuities:** Sharp drops/jumps in total observed devices (`n_maids`) caused by upstream panel changes, not just real-world holiday movement. Role 3 must normalize all comparisons using **Published Presence Share (%)** across a consistent set of well-covered cells and explicitly isolate the Jan 1 break.
+     * **$k=5$ Privacy Suppression (64.6% `NaN` rows):** Cells with $<5$ devices are suppressed. Role 3 (using Role 1's coverage flags) must enforce the $\ge 90\%$ weekday/weekend coverage rule and run sensitivity checks ($80\%, 90\%, 95\%$) plus cluster-robust confidence intervals so our conclusions for **H1, H2, and H3** are scientifically valid.
+
+---
+
+### C. Shared Team Responsibilities (All 4 Members)
 * **GitHub Documentation & Code Review:** Collaboratively maintain `README.md`, review Pull Requests, and verify end-to-end reproducibility.
 * **Storytelling & Methodological Rigor:** Synthesize results for RQ1–RQ4 and clearly communicate dataset limitations ($k=5$ privacy suppression, Jan 1 & Feb 16 sample breaks, mixed-use $500\text{ m}$ cells, and association vs. causation).
 * **5-Minute Video Presentation (eLOK UGM — Before Week 13):** Co-write the script, record presenter segments, and edit the final 5-minute video.
@@ -131,3 +167,4 @@ python -m src.visualize
 ## 7. License & Attribution
 * **Mobility Data:** JogjaPulse dataset via Zenodo ([Record 23157460](https://zenodo.org/records/23157460)).
 * **Spatial Facility Data:** © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, available under the Open Database License (ODbL).
+

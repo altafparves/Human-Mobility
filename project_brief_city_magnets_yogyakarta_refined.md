@@ -121,24 +121,61 @@ Highlighting these limitations shows strong data literacy and familiarity with P
 
 ---
 
-## 8. Team Split & Detailed Action Plan (4 Members)
+## 8. Team Split, Execution Order & Detailed Action Plan (4 Members)
 
-Our team consists of **4 members** (**Altaf**, **Akhnaf**, **Nalen**, and **Rafi Busthami**). Each member leads one dedicated technical pillar across the Medallion Data Engineering Pipeline, while **Storytelling, Slide Deck, Video Production, and Repository Documentation** are shared equally among all 4 members.
+**Team Members (4 People):**
+* **Altaf**
+* **Akhnaf**
+* **Nalen**
+* **Rafi Busthami**
 
-### A. 4-Person Technical Role Assignment Summary
-
-| Role | PIC (Member) | Pipeline Stage | Primary Output / Modules |
-| :--- | :--- | :--- | :--- |
-| **Role 1: Data Ingestion & Temporal Cleaning Lead** | **Altaf** | Bronze $\rightarrow$ Silver (Temporal) | `src/ingest.py`, `src/clean_temporal.py`, `data/raw/`, `data/silver/mobility_clean.parquet` |
-| **Role 2: Geospatial Engineering & Facility Deduplication Lead** | **Akhnaf** | Silver $\rightarrow$ Gold (Spatial) | `src/spatial_join.py`, `configs/osm_tags.yaml`, `data/silver/grid_facilities.parquet` |
-| **Role 3: Mobility Analytics & Statistical Modeling Lead** | **Nalen** | Gold (Analytical Metrics) | `src/metrics.py`, `data/gold/cell_metrics.parquet`, `data/gold/kapanewon_hourly.parquet` |
-| **Role 4: Geospatial Visualization & Dashboard Lead** | **Rafi Busthami** | Serve & Visual Analytics | `src/visualize.py`, `notebooks/visuals.ipynb`, `figures/`, Interactive Map (`figures/city_magnets_map.html`) |
+Each member selects and leads **one dedicated technical pillar** across the Medallion Data Engineering Pipeline, while **Storytelling, Slide Deck, Video Production, and Repository Documentation** are shared equally among all 4 members.
 
 ---
 
-### B. Detailed Responsibilities per Technical Role
+### A. 4-Person Technical Role Overview (Open for Selection)
 
-#### Role 1: Data Ingestion & Temporal Cleaning Lead (Bronze $\rightarrow$ Silver) — **Altaf**
+| Role | PIC (Choose Role) | Pipeline Stage | Difficulty & Strategic Priority Flag | Primary Output / Modules |
+| :--- | :--- | :--- | :--- | :--- |
+| **Role 1: Data Ingestion & Temporal Cleaning Lead** | *[TBD — Open]* | Bronze $\rightarrow$ Silver (Temporal) | ⚡ **FIRST TO START (Week 1 Blocker)**<br>🛡️ **Foundation Gatekeeper** | `src/ingest.py`, `src/clean_temporal.py`, `data/raw/`, `data/silver/mobility_clean.parquet` |
+| **Role 2: Geospatial Engineering & Facility Deduplication Lead** | *[TBD — Open]* | Silver $\rightarrow$ Gold (Spatial) | ⚡ **FIRST TO START (Week 1 Blocker)**<br>🔥 **MOST TECHNICALLY DIFFICULT** | `src/spatial_join.py`, `configs/osm_tags.yaml`, `data/silver/grid_facilities.parquet` |
+| **Role 3: Mobility Analytics & Statistical Modeling Lead** | *[TBD — Open]* | Gold (Analytical Metrics) | ⭐ **MOST IMPORTANT / CRITICAL FOR GRADING & RESEARCH VALIDITY** | `src/metrics.py`, `data/gold/cell_metrics.parquet`, `data/gold/kapanewon_hourly.parquet` |
+| **Role 4: Geospatial Visualization & Interactive Map Lead** | *[TBD — Open]* | Serve & Visual Analytics | 🎯 **HIGH-IMPACT PRESENTATION DELIVERABLE** | `src/visualize.py`, `notebooks/visuals.ipynb`, `figures/`, `figures/city_magnets_map.html` |
+
+---
+
+### B. Execution Order (Who Works First?) & Criticality Flags
+
+#### 1. Execution Sequence (Pipeline Dependencies)
+```text
+PHASE 1 (Week 1 - Parallel Start / Upstream Blockers)
+├── Role 1 (Ingestion & Temporal Cleaning) ──┐
+└── Role 2 (Geospatial & OSM Deduplication) ─┴──> Produces Silver Layer (data/silver/)
+                                                        │
+PHASE 2 (Week 2 - Downstream Analytics)                 ▼
+└── Role 3 (Mobility Metrics & Statistical Modeling) ──> Produces Gold Layer (data/gold/)
+                                                        │
+PHASE 3 (Week 2–3 - Serve & Visual Storytelling)        ▼
+└── Role 4 (Interactive Map & Core Figures) ───────────> Final Charts + Shared 5-Min Video
+```
+
+* **Who Must Work First (Phase 1 — Immediate Start):**
+  * **Role 1** and **Role 2** must start immediately in **Week 1** and can work **in parallel**. Role 1 only needs the raw JogjaPulse CSVs and Overpass API to build the cleaned temporal table and cell coordinates, while Role 2 uses the cell coordinates and OSM extract to reconstruct the `EPSG:32749` grid polygons and deduplicate facilities.
+  * *What Roles 3 & 4 do during Week 1:* While waiting for `data/silver/`, Role 3 writes the metric calculation functions and unit tests against a small sample/mock dataset, and Role 4 sets up the Folium/Kepler.gl map template and chart styling scripts.
+
+#### 2. Key Complexity & Importance Flags
+* 🔥 **Most Technically Difficult Role — Role 2 (Geospatial Engineering & Facility Deduplication):**
+  * **Why it is the hardest:** OpenStreetMap data is messy and heterogeneous. Major landmarks like **UGM** or **RSUP Dr. Sardjito** are mapped simultaneously as multiple point `nodes` (individual clinics/faculties) and large boundary `ways`/`relations` (polygons) spanning several $500\text{ m} \times 500\text{ m}$ grid cells. Without careful spatial deduplication (`EPSG:32749` projection, polygon containment, and site grouping), a single campus would be double-counted dozens of times. Role 2 also has to classify **single-category vs. mixed-use cells** and build the **spatially matched baseline cell set**.
+* ⭐ **Most Important / Critical Role for Research Validity — Role 3 (Mobility Analytics & Statistical Modeling)** *( closely supported by Role 1's coverage filter)*:
+  * **Why it is the most critical for grading:** The JogjaPulse dataset has two major statistical traps documented by Pak Widyawan:
+    1. **Sharp Sample Discontinuities (1 Jan 2022 & 16 Feb 2022):** Total device counts drop/jump abruptly due to upstream data provider changes, not just holiday travel. Using raw `n_maids` counts will invalidate the findings. Role 3 must normalize metrics using **Published Presence Share (%)** over a consistent set of well-covered cells and isolate the 1 January break.
+    2. **$k=5$ Privacy Suppression (64.6% `NaN` rows):** Cells with $<5$ devices are masked. Role 3 (building on Role 1's coverage audit) must enforce the $\ge 90\%$ weekday/weekend coverage rule and run sensitivity checks ($80\%, 90\%, 95\%$) plus cluster-robust confidence intervals so every claim in our presentation is scientifically defensible.
+
+---
+
+### C. Detailed Responsibilities per Technical Role
+
+#### Role 1: Data Ingestion & Temporal Cleaning Lead (Bronze $\rightarrow$ Silver) — ⚡ *Starts First (Phase 1)*
 * **Data Acquisition & Reproducible Ingestion (`src/ingest.py`):**
   * Automate downloading/loading of JogjaPulse daily (`presence_cell500m_daily.csv`) and hourly (`presence_kapanewon_hourly.csv`) datasets into `data/raw/`.
   * Build the Overpass API query script (targeting historical snapshot `2021-12-01T00:00:00Z` with fallback comparison to current extract) covering the Yogyakarta mobility grid bounding box plus buffer.
@@ -151,7 +188,7 @@ Our team consists of **4 members** (**Altaf**, **Akhnaf**, **Nalen**, and **Rafi
   * Flag the anomalous date (`2022-03-08`) and implement the $\ge 90\%$ coverage filter (plus $80\%$ and $95\%$ flags for sensitivity checks).
   * Create temporal calendar flags (`day_of_week`, `is_weekend`, `is_nataru_window` for 24 Dec 2021–2 Jan 2022, and `sampling_period`) and export cleaned tables to `data/silver/`.
 
-#### Role 2: Geospatial Engineering & Facility Deduplication Lead (Silver $\rightarrow$ Gold Spatial) — **Akhnaf**
+#### Role 2: Geospatial Engineering & Facility Deduplication Lead (Silver $\rightarrow$ Gold Spatial) — ⚡ *Starts First (Phase 1)* | 🔥 *Most Difficult*
 * **Grid Polygon Reconstruction (`src/spatial_join.py`):**
   * Reconstruct exact $500\text{ m} \times 500\text{ m}$ vector grid polygons from `[x_min_utm, x_min_utm + 500) × [y_min_utm, y_min_utm + 500)` in UTM Zone 49S (`EPSG:32749`).
 * **OSM Tag Taxonomy & Geometry Normalization (`configs/osm_tags.yaml`):**
@@ -162,7 +199,7 @@ Our team consists of **4 members** (**Altaf**, **Akhnaf**, **Nalen**, and **Rafi
   * Execute `gpd.sjoin` / polygon intersection between the $500\text{ m}$ grid cells and deduplicated facilities, computing facility counts, category-presence binary vectors, and polygon overlap areas per cell.
   * Explicitly label **single-category cells**, **mixed-use cells**, and **no selected facility mapped** cells, and construct the spatially matched baseline comparison cell set.
 
-#### Role 3: Mobility Analytics & Statistical Modeling Lead (Gold Layer) — **Nalen**
+#### Role 3: Mobility Analytics & Statistical Modeling Lead (Gold Layer) — ⭐ *Most Important / Critical (Phase 2)*
 * **Relative Presence Normalization (`src/metrics.py`):**
   * Compute daily **Published Presence Share (%)** per cell:
     $$\text{Published Presence Share (\%)} = \frac{n\_maids_{c, d}}{\sum_{c} n\_maids_{c, d}} \times 100$$
@@ -176,7 +213,7 @@ Our team consists of **4 members** (**Altaf**, **Akhnaf**, **Nalen**, and **Rafi
   * Implement cluster-robust resampling/bootstrapping (clustering multi-cell complexes like UGM/Sardjito and repeated dates) to generate confidence intervals.
   * Run sensitivity comparisons across coverage thresholds ($80\%, 90\%, 95\%$) and **single-category vs. mixed-use** cells, exporting final Gold tables (`data/gold/`).
 
-#### Role 4: Geospatial Visualization & Interactive Dashboard Lead (Serve Layer) — **Rafi Busthami**
+#### Role 4: Geospatial Visualization & Interactive Dashboard Lead (Serve Layer) — 🎯 *Phase 3 (Visual Impact)*
 * **Visual Design System & Chart Engineering (`src/visualize.py` & `notebooks/visuals.ipynb`):**
   * Establish a unified color palette and publication-grade typography across all static (`matplotlib`/`seaborn`/`plotly`) and interactive outputs.
 * **Delivering the 4 Core Analytical Visuals (`figures/`):**
@@ -187,11 +224,11 @@ Our team consists of **4 members** (**Altaf**, **Akhnaf**, **Nalen**, and **Rafi
 
 ---
 
-### C. Shared Team Responsibilities (All 4 Members)
+### D. Shared Team Responsibilities (All 4 Members)
 
-Because clear communication, reproducibility, and academic rigor are evaluated across the entire group, **all 4 members collaborate on Storytelling, Documentation, and Presentation**:
+Because clear communication, reproducibility, and academic rigor are evaluated across the entire group, **all 4 members (Altaf, Akhnaf, Nalen, Rafi Busthami) collaborate on Storytelling, Documentation, and Presentation**:
 
-| Shared Deliverable | Collective Tasks (Altaf, Akhnaf, Nalen, Rafi Busthami) |
+| Shared Deliverable | Collective Tasks (All 4 Members) |
 | :--- | :--- |
 | **1. GitHub Repository & Documentation** | Maintain clean modular code (`src/`), document pipeline execution instructions and methodology in `README.md`, review Pull Requests, and ensure one-command reproducibility. |
 | **2. Storytelling & Limitations Synthesis** | Synthesize findings for H1 (Education), H2 (Commercial/Tourism/Markets), and H3 (Healthcare), while transparently communicating the 7 methodological limitations ($k=5$ privacy suppression, Jan 1 sample break, ecological fallacy in $500\text{ m}$ cells). |
