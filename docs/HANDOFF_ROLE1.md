@@ -203,3 +203,4 @@ One row per `cell_id` (all 5,715): `cell_id`, `geometry` (or keep the UTM bounds
 * Keep `pytest` green before pushing.
 * For the video/presentation, my segment covers: data sources, the k = 5 suppression, the Jan 1 / Feb 16 breaks, the coverage rule, and the landmark audit.
 * Questions about Role 1 → ping **Altaf**.
+
