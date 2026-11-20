@@ -1,0 +1,136 @@
+{
+  "generated_at_utc": "2026-11-15T04:20:43.081795+00:00",
+  "crs_source": "EPSG:4326",
+  "primary_snapshot_selected": "current_snapshot_verified_2021_2022_existence",
+  "derived_bbox_wgs84": {
+    "south": -8.1827,
+    "west": 110.024103,
+    "north": -7.571071,
+    "east": 110.823227,
+    "buffer_meters": 500.0,
+    "utm_bounds": {
+      "x_min": 392500.0,
+      "y_min": 9095500.0,
+      "x_max": 480500.0,
+      "y_max": 9163000.0
+    }
+  },
+  "historical_snapshot": {
+    "requested_date": "2021-12-01T00:00:00Z",
+    "status": "unavailable_fallback_to_current",
+    "endpoint_used": null,
+    "fetched_at_utc": "2026-11-15T04:20:43.078473+00:00",
+    "osm3s_timestamp_base": null,
+    "output_file": null,
+    "error": "HTTPSConnectionPool(host='z.overpass-api.de', port=443): Read timed out. (read timeout=30)",
+    "query": "[out:json][timeout:60][date:\"2021-12-01T00:00:00Z\"];\n(\n  nwr[\"amenity\"=\"university\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"amenity\"=\"college\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"amenity\"=\"hospital\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"amenity\"=\"marketplace\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"healthcare\"=\"hospital\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"highway\"=\"bus_stop\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"historic\"=\"castle\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"historic\"=\"monument\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"historic\"=\"memorial\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"historic\"=\"archaeological_site\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"public_transport\"=\"station\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"public_transport\"=\"platform\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"public_transport\"=\"stop_position\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"railway\"=\"station\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"railway\"=\"halt\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"shop\"=\"mall\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"shop\"=\"department_store\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"tourism\"=\"attraction\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"tourism\"=\"museum\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"tourism\"=\"theme_park\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"tourism\"=\"viewpoint\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"tourism\"=\"zoo\"](-8.1827,110.024103,-7.571071,110.823227);\n  way[\"highway\"][\"name\"~\"Malioboro\"](-7.805,110.360,-7.785,110.372);\n);\nout body geom;",
+    "summary": {
+      "total_elements": 0,
+      "named_elements": 0,
+      "by_osm_type": {
+        "node": 0,
+        "way": 0,
+        "relation": 0
+      },
+      "by_facility_category": {
+        "education_campus": 0,
+        "healthcare_hospital": 0,
+        "commercial_mall": 0,
+        "traditional_market": 0,
+        "tourism_site": 0,
+        "transit_hub": 0
+      },
+      "by_category_and_osm_type": {
+        "education_campus": {
+          "node": 0,
+          "way": 0,
+          "relation": 0
+        },
+        "healthcare_hospital": {
+          "node": 0,
+          "way": 0,
+          "relation": 0
+        },
+        "commercial_mall": {
+          "node": 0,
+          "way": 0,
+          "relation": 0
+        },
+        "traditional_market": {
+          "node": 0,
+          "way": 0,
+          "relation": 0
+        },
+        "tourism_site": {
+          "node": 0,
+          "way": 0,
+          "relation": 0
+        },
+        "transit_hub": {
+          "node": 0,
+          "way": 0,
+          "relation": 0
+        }
+      }
+    }
+  },
+  "current_snapshot": {
+    "requested_date": "current",
+    "status": "fetched",
+    "endpoint_used": "https://overpass.openstreetmap.fr/api/interpreter",
+    "fetched_at_utc": "2026-11-15T04:17:21.701850+00:00",
+    "osm3s_timestamp_base": "2026-11-15T04:15:17Z",
+    "output_file": "data/raw/osm_facilities_current.json",
+    "error": null,
+    "query": "[out:json][timeout:120];\n(\n  nwr[\"amenity\"=\"university\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"amenity\"=\"college\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"amenity\"=\"hospital\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"amenity\"=\"marketplace\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"healthcare\"=\"hospital\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"highway\"=\"bus_stop\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"historic\"=\"castle\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"historic\"=\"monument\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"historic\"=\"memorial\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"historic\"=\"archaeological_site\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"public_transport\"=\"station\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"public_transport\"=\"platform\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"public_transport\"=\"stop_position\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"railway\"=\"station\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"railway\"=\"halt\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"shop\"=\"mall\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"shop\"=\"department_store\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"tourism\"=\"attraction\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"tourism\"=\"museum\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"tourism\"=\"theme_park\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"tourism\"=\"viewpoint\"](-8.1827,110.024103,-7.571071,110.823227);\n  nwr[\"tourism\"=\"zoo\"](-8.1827,110.024103,-7.571071,110.823227);\n  way[\"highway\"][\"name\"~\"Malioboro\"](-7.805,110.360,-7.785,110.372);\n);\nout body geom;",
+    "summary": {
+      "total_elements": 2358,
+      "named_elements": 2153,
+      "by_osm_type": {
+        "node": 1401,
+        "way": 932,
+        "relation": 25
+      },
+      "by_facility_category": {
+        "education_campus": 189,
+        "healthcare_hospital": 186,
+        "commercial_mall": 33,
+        "traditional_market": 375,
+        "tourism_site": 537,
+        "transit_hub": 1039
+      },
+      "by_category_and_osm_type": {
+        "education_campus": {
+          "node": 13,
+          "way": 174,
+          "relation": 2
+        },
+        "healthcare_hospital": {
+          "node": 59,
+          "way": 123,
+          "relation": 4
+        },
+        "commercial_mall": {
+          "node": 11,
+          "way": 21,
+          "relation": 1
+        },
+        "traditional_market": {
+          "node": 72,
+          "way": 295,
+          "relation": 8
+        },
+        "tourism_site": {
+          "node": 314,
+          "way": 216,
+          "relation": 7
+        },
+        "transit_hub": {
+          "node": 934,
+          "way": 102,
+          "relation": 3
+        }
+      }
+    }
+  }
+}

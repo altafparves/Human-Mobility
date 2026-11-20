@@ -29,6 +29,11 @@ env/
 # Data files (Keep directory structure via .gitkeep, ignore large datasets)
 data/raw/*
 !data/raw/.gitkeep
+# Frozen OSM snapshot + audit metadata (shared so all roles use identical OSM data)
+!data/raw/osm_facilities_current.json
+!data/raw/osm_ingestion_metadata.json
+!data/raw/osm_landmark_audit.json
+!data/raw/jogjapulse_verification_summary.json
 data/silver/*
 !data/silver/.gitkeep
 data/gold/*

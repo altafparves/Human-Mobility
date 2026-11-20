@@ -1,0 +1,1159 @@
+{
+  "audited_at_utc": "2026-11-15T04:20:43.093771+00:00",
+  "historical_date": "2021-12-01T00:00:00Z",
+  "category_count_comparison": {
+    "education_campus": {
+      "historical_2021": 0,
+      "current": 189,
+      "delta": 189
+    },
+    "healthcare_hospital": {
+      "historical_2021": 0,
+      "current": 186,
+      "delta": 186
+    },
+    "commercial_mall": {
+      "historical_2021": 0,
+      "current": 33,
+      "delta": 33
+    },
+    "traditional_market": {
+      "historical_2021": 0,
+      "current": 375,
+      "delta": 375
+    },
+    "tourism_site": {
+      "historical_2021": 0,
+      "current": 537,
+      "delta": 537
+    },
+    "transit_hub": {
+      "historical_2021": 0,
+      "current": 1039,
+      "delta": 1039
+    }
+  },
+  "landmark_comparison_summary": {
+    "UGM": {
+      "expected_category": "education_campus",
+      "existed_in_2021_2022": true,
+      "historical_note": "Founded 1949; primary Sleman campus active throughout 2021-2022.",
+      "historical_2021_status": "unavailable_fallback_to_current",
+      "historical_2021_captured": false,
+      "historical_2021_category_elements": 0,
+      "current_captured": true,
+      "current_category_elements": 48,
+      "current_total_elements": 48,
+      "current_counts_by_osm_type": {
+        "node": 39,
+        "way": 9,
+        "relation": 0
+      },
+      "current_names_sample": [
+        "Balairung UGM",
+        "Bundaran UGM",
+        "Fakultas Ekonomika dan Bisnis UGM",
+        "Fakultas Geografi UGM",
+        "Fisipol UGM (Barat)",
+        "Fisipol UGM (Timur)"
+      ]
+    },
+    "UNY": {
+      "expected_category": "education_campus",
+      "existed_in_2021_2022": true,
+      "historical_note": "Founded 1964; Karangmalang & Wates campuses active throughout 2021-2022.",
+      "historical_2021_status": "unavailable_fallback_to_current",
+      "historical_2021_captured": false,
+      "historical_2021_category_elements": 0,
+      "current_captured": true,
+      "current_category_elements": 31,
+      "current_total_elements": 31,
+      "current_counts_by_osm_type": {
+        "node": 8,
+        "way": 23,
+        "relation": 0
+      },
+      "current_names_sample": [
+        "Asrama Mahasiswa UNY Kampus Wates",
+        "FIP UNY",
+        "Fakultas Ekonomi dan Bisnis (FEB) UNY",
+        "Fakultas Ilmu Pendidikan (FIP) UNY",
+        "Fakultas Ilmu Sosial, Hukum, dan Ilmu Politik (FISHIPOL) UNY",
+        "GOR UNY Kampus Wates"
+      ]
+    },
+    "Ambarrukmo_Plaza": {
+      "expected_category": "commercial_mall",
+      "existed_in_2021_2022": true,
+      "historical_note": "Opened 2006; major Sleman shopping mall active in 2021-2022.",
+      "historical_2021_status": "unavailable_fallback_to_current",
+      "historical_2021_captured": false,
+      "historical_2021_category_elements": 0,
+      "current_captured": true,
+      "current_category_elements": 7,
+      "current_total_elements": 7,
+      "current_counts_by_osm_type": {
+        "node": 4,
+        "way": 2,
+        "relation": 1
+      },
+      "current_names_sample": [
+        "Ambarrukmo Plaza 1",
+        "Ambarrukmo Plaza 2",
+        "Halte Ambarrukmo Plaza 1",
+        "Halte Ambarrukmo Plaza 2",
+        "Plaza Ambarrukmo"
+      ]
+    },
+    "Pakuwon_Hartono_Mall": {
+      "expected_category": "commercial_mall",
+      "existed_in_2021_2022": true,
+      "historical_note": "Opened 2015 as Hartono Mall Yogyakarta; rebranded to Pakuwon Mall Jogja after late-2020 acquisition. OSM uses 'Pakuwon Mall Jogja' (with 'Hartono Mall' in alt/old_name).",
+      "historical_2021_status": "unavailable_fallback_to_current",
+      "historical_2021_captured": false,
+      "historical_2021_category_elements": 0,
+      "current_captured": true,
+      "current_category_elements": 8,
+      "current_total_elements": 8,
+      "current_counts_by_osm_type": {
+        "node": 5,
+        "way": 3,
+        "relation": 0
+      },
+      "current_names_sample": [
+        "Halte Pakuwon Mall Jogja",
+        "Pakuwon Mall",
+        "Pakuwon Mall 2",
+        "Pakuwon Mall Jogja",
+        "Pakuwon Mall Solo Baru",
+        "Pakuwon Mall Yogyakarta"
+      ]
+    },
+    "RSUP_Dr_Sardjito": {
+      "expected_category": "healthcare_hospital",
+      "existed_in_2021_2022": true,
+      "historical_note": "Opened 1982; primary tertiary referral hospital in DIY active in 2021-2022.",
+      "historical_2021_status": "unavailable_fallback_to_current",
+      "historical_2021_captured": false,
+      "historical_2021_category_elements": 0,
+      "current_captured": true,
+      "current_category_elements": 8,
+      "current_total_elements": 8,
+      "current_counts_by_osm_type": {
+        "node": 5,
+        "way": 3,
+        "relation": 0
+      },
+      "current_names_sample": [
+        "Halte RS Sardjito (Barat)",
+        "Halte RS Sardjito (Timur)",
+        "ICC RSUP Dr. Sardjito",
+        "ICU RSUP Dr. Sardjito",
+        "Pusat Bedah Terpadu RS Sardjito",
+        "RS Sardjito"
+      ]
+    },
+    "Malioboro": {
+      "expected_category": "tourism_site / commercial_mall",
+      "existed_in_2021_2022": true,
+      "historical_note": "Historic central commercial & tourism corridor in Kota Yogyakarta ( includes Plaza Malioboro / Mall Malioboro, Teras Malioboro, and Jalan Malioboro).",
+      "historical_2021_status": "unavailable_fallback_to_current",
+      "historical_2021_captured": false,
+      "historical_2021_category_elements": 0,
+      "current_captured": true,
+      "current_category_elements": 15,
+      "current_total_elements": 16,
+      "current_counts_by_osm_type": {
+        "node": 8,
+        "way": 8,
+        "relation": 0
+      },
+      "current_names_sample": [
+        "Halte Malioboro 1",
+        "Halte Malioboro 2",
+        "Jalan Malioboro",
+        "Malioboro 1",
+        "Malioboro 2",
+        "Malioboro 3"
+      ]
+    }
+  },
+  "historical_2021_details": {
+    "UGM": {
+      "expected_category": "education_campus",
+      "existed_in_2021_2022": true,
+      "historical_note": "Founded 1949; primary Sleman campus active throughout 2021-2022.",
+      "is_captured": false,
+      "is_captured_in_study_categories": false,
+      "total_matching_elements": 0,
+      "category_matching_elements": 0,
+      "counts_by_osm_type": {
+        "node": 0,
+        "way": 0,
+        "relation": 0
+      },
+      "distinct_names_sample": [],
+      "top_category_matches": []
+    },
+    "UNY": {
+      "expected_category": "education_campus",
+      "existed_in_2021_2022": true,
+      "historical_note": "Founded 1964; Karangmalang & Wates campuses active throughout 2021-2022.",
+      "is_captured": false,
+      "is_captured_in_study_categories": false,
+      "total_matching_elements": 0,
+      "category_matching_elements": 0,
+      "counts_by_osm_type": {
+        "node": 0,
+        "way": 0,
+        "relation": 0
+      },
+      "distinct_names_sample": [],
+      "top_category_matches": []
+    },
+    "Ambarrukmo_Plaza": {
+      "expected_category": "commercial_mall",
+      "existed_in_2021_2022": true,
+      "historical_note": "Opened 2006; major Sleman shopping mall active in 2021-2022.",
+      "is_captured": false,
+      "is_captured_in_study_categories": false,
+      "total_matching_elements": 0,
+      "category_matching_elements": 0,
+      "counts_by_osm_type": {
+        "node": 0,
+        "way": 0,
+        "relation": 0
+      },
+      "distinct_names_sample": [],
+      "top_category_matches": []
+    },
+    "Pakuwon_Hartono_Mall": {
+      "expected_category": "commercial_mall",
+      "existed_in_2021_2022": true,
+      "historical_note": "Opened 2015 as Hartono Mall Yogyakarta; rebranded to Pakuwon Mall Jogja after late-2020 acquisition. OSM uses 'Pakuwon Mall Jogja' (with 'Hartono Mall' in alt/old_name).",
+      "is_captured": false,
+      "is_captured_in_study_categories": false,
+      "total_matching_elements": 0,
+      "category_matching_elements": 0,
+      "counts_by_osm_type": {
+        "node": 0,
+        "way": 0,
+        "relation": 0
+      },
+      "distinct_names_sample": [],
+      "top_category_matches": []
+    },
+    "RSUP_Dr_Sardjito": {
+      "expected_category": "healthcare_hospital",
+      "existed_in_2021_2022": true,
+      "historical_note": "Opened 1982; primary tertiary referral hospital in DIY active in 2021-2022.",
+      "is_captured": false,
+      "is_captured_in_study_categories": false,
+      "total_matching_elements": 0,
+      "category_matching_elements": 0,
+      "counts_by_osm_type": {
+        "node": 0,
+        "way": 0,
+        "relation": 0
+      },
+      "distinct_names_sample": [],
+      "top_category_matches": []
+    },
+    "Malioboro": {
+      "expected_category": "tourism_site / commercial_mall",
+      "existed_in_2021_2022": true,
+      "historical_note": "Historic central commercial & tourism corridor in Kota Yogyakarta ( includes Plaza Malioboro / Mall Malioboro, Teras Malioboro, and Jalan Malioboro).",
+      "is_captured": false,
+      "is_captured_in_study_categories": false,
+      "total_matching_elements": 0,
+      "category_matching_elements": 0,
+      "counts_by_osm_type": {
+        "node": 0,
+        "way": 0,
+        "relation": 0
+      },
+      "distinct_names_sample": [],
+      "top_category_matches": []
+    }
+  },
+  "current_details": {
+    "UGM": {
+      "expected_category": "education_campus",
+      "existed_in_2021_2022": true,
+      "historical_note": "Founded 1949; primary Sleman campus active throughout 2021-2022.",
+      "is_captured": true,
+      "is_captured_in_study_categories": true,
+      "total_matching_elements": 48,
+      "category_matching_elements": 48,
+      "counts_by_osm_type": {
+        "node": 39,
+        "way": 9,
+        "relation": 0
+      },
+      "distinct_names_sample": [
+        "Balairung UGM",
+        "Bundaran UGM",
+        "Fakultas Ekonomika dan Bisnis UGM",
+        "Fakultas Geografi UGM",
+        "Fisipol UGM (Barat)",
+        "Fisipol UGM (Timur)",
+        "GIK UGM",
+        "GSP UGM (Barat)",
+        "GSP UGM (Timur)",
+        "Halte Bus F. Biologi",
+        "Halte F. Ilmu Budaya",
+        "Halte F. Kehutanan",
+        "Halte F. MIPA",
+        "Halte F. Pertanian",
+        "Halte F. Peternakan"
+      ],
+      "top_category_matches": [
+        {
+          "osm_id": "node/2712135831",
+          "osm_type": "node",
+          "name": "Bundaran UGM",
+          "alt_names": {},
+          "matched_categories": [
+            "tourism_site"
+          ],
+          "key_tags": {
+            "historic": "monument"
+          }
+        },
+        {
+          "osm_id": "node/2712142975",
+          "osm_type": "node",
+          "name": "Museum UGM",
+          "alt_names": {},
+          "matched_categories": [
+            "tourism_site"
+          ],
+          "key_tags": {
+            "tourism": "museum"
+          }
+        },
+        {
+          "osm_id": "node/3632596977",
+          "osm_type": "node",
+          "name": "Halte RS Sardjito (Timur)",
+          "alt_names": {
+            "alt_name": "Halte FK UGM"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/3632596980",
+          "osm_type": "node",
+          "name": "Halte GIK UGM",
+          "alt_names": {
+            "alt_name": "Halte Jl. Kaliurang (Kopma UGM)"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/3632596981",
+          "osm_type": "node",
+          "name": "Halte Vokasi UGM",
+          "alt_names": {
+            "alt_name": "Halte Jl. Kaliurang (Pertanian UGM)"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/3632597223",
+          "osm_type": "node",
+          "name": "TPB Fakultas Biologi UGM",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "node/3632597224",
+          "osm_type": "node",
+          "name": "TPB Fakultas Biologi UGM",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/3632597225",
+          "osm_type": "node",
+          "name": "TPB Fak. Kedokteran UGM",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/3632597226",
+          "osm_type": "node",
+          "name": "TPB Fak. Peternakan UGM",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/5610698047",
+          "osm_type": "node",
+          "name": "RS Sardjito",
+          "alt_names": {
+            "alt_name": "FK UGM"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "amenity": "bus_station",
+            "public_transport": "stop_position"
+          }
+        }
+      ]
+    },
+    "UNY": {
+      "expected_category": "education_campus",
+      "existed_in_2021_2022": true,
+      "historical_note": "Founded 1964; Karangmalang & Wates campuses active throughout 2021-2022.",
+      "is_captured": true,
+      "is_captured_in_study_categories": true,
+      "total_matching_elements": 31,
+      "category_matching_elements": 31,
+      "counts_by_osm_type": {
+        "node": 8,
+        "way": 23,
+        "relation": 0
+      },
+      "distinct_names_sample": [
+        "Asrama Mahasiswa UNY Kampus Wates",
+        "FIP UNY",
+        "Fakultas Ekonomi dan Bisnis (FEB) UNY",
+        "Fakultas Ilmu Pendidikan (FIP) UNY",
+        "Fakultas Ilmu Sosial, Hukum, dan Ilmu Politik (FISHIPOL) UNY",
+        "GOR UNY Kampus Wates",
+        "Gedung Layanan Akademik UNY",
+        "Halte Jl. Colombo (UNY)",
+        "Halte TJ UNY Gejayan",
+        "Halte UNY",
+        "Kampus 2 FIP UNY",
+        "Kampus UUP 2 FIP UNY",
+        "Museum Pendidikan Indonesia. MPI UNY",
+        "Patung Kembara UNY",
+        "Tugu Bunderan Stainless UNY-Kuningan"
+      ],
+      "top_category_matches": [
+        {
+          "osm_id": "node/3473955068",
+          "osm_type": "node",
+          "name": "Halte UNY",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "node/3625644283",
+          "osm_type": "node",
+          "name": "Halte Jl. Colombo (UNY)",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/3625644284",
+          "osm_type": "node",
+          "name": "UNY Colombo",
+          "alt_names": {
+            "alt_name": "Jl. Colombo (UNY)"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "amenity": "bus_station",
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "node/3625644285",
+          "osm_type": "node",
+          "name": "Halte TJ UNY Gejayan",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/5987690797",
+          "osm_type": "node",
+          "name": "Tugu Bunderan Stainless UNY-Kuningan",
+          "alt_names": {},
+          "matched_categories": [
+            "tourism_site"
+          ],
+          "key_tags": {
+            "historic": "memorial"
+          }
+        },
+        {
+          "osm_id": "node/9394006106",
+          "osm_type": "node",
+          "name": "Patung Kembara UNY",
+          "alt_names": {},
+          "matched_categories": [
+            "tourism_site"
+          ],
+          "key_tags": {
+            "historic": "monument"
+          }
+        },
+        {
+          "osm_id": "node/10703155458",
+          "osm_type": "node",
+          "name": "FIP UNY",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/14225409158",
+          "osm_type": "node",
+          "name": "FIP UNY",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "way/189172294",
+          "osm_type": "way",
+          "name": "Universitas Negeri Yogyakarta",
+          "alt_names": {
+            "short_name": "UNY"
+          },
+          "matched_categories": [
+            "education_campus"
+          ],
+          "key_tags": {
+            "amenity": "university"
+          }
+        },
+        {
+          "osm_id": "way/236502143",
+          "osm_type": "way",
+          "name": "GOR UNY Kampus Wates",
+          "alt_names": {},
+          "matched_categories": [
+            "education_campus"
+          ],
+          "key_tags": {
+            "amenity": "university",
+            "building": "yes"
+          }
+        }
+      ]
+    },
+    "Ambarrukmo_Plaza": {
+      "expected_category": "commercial_mall",
+      "existed_in_2021_2022": true,
+      "historical_note": "Opened 2006; major Sleman shopping mall active in 2021-2022.",
+      "is_captured": true,
+      "is_captured_in_study_categories": true,
+      "total_matching_elements": 7,
+      "category_matching_elements": 7,
+      "counts_by_osm_type": {
+        "node": 4,
+        "way": 2,
+        "relation": 1
+      },
+      "distinct_names_sample": [
+        "Ambarrukmo Plaza 1",
+        "Ambarrukmo Plaza 2",
+        "Halte Ambarrukmo Plaza 1",
+        "Halte Ambarrukmo Plaza 2",
+        "Plaza Ambarrukmo"
+      ],
+      "top_category_matches": [
+        {
+          "osm_id": "node/3631487204",
+          "osm_type": "node",
+          "name": "Ambarrukmo Plaza 2",
+          "alt_names": {
+            "alt_name": "Halte Jl. Solo (Ambarukmo)"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/3631487205",
+          "osm_type": "node",
+          "name": "Ambarrukmo Plaza 2",
+          "alt_names": {
+            "alt_name": "Jl. Solo (Ambarukmo)"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "node/3631487216",
+          "osm_type": "node",
+          "name": "Ambarrukmo Plaza 1",
+          "alt_names": {
+            "alt_name": "Jl. Solo (Jogja Bisnis)"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "node/3631487217",
+          "osm_type": "node",
+          "name": "Ambarrukmo Plaza 1",
+          "alt_names": {
+            "alt_name": "Halte Jl. Solo (Jogja Bisnis)"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "way/1423440911",
+          "osm_type": "way",
+          "name": "Halte Ambarrukmo Plaza 2",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "public_transport": "platform",
+            "building": "shelter"
+          }
+        },
+        {
+          "osm_id": "way/1423440912",
+          "osm_type": "way",
+          "name": "Halte Ambarrukmo Plaza 1",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "public_transport": "platform",
+            "building": "shelter"
+          }
+        },
+        {
+          "osm_id": "relation/14251989",
+          "osm_type": "relation",
+          "name": "Plaza Ambarrukmo",
+          "alt_names": {
+            "short_name": "Amplaz"
+          },
+          "matched_categories": [
+            "commercial_mall"
+          ],
+          "key_tags": {
+            "shop": "mall"
+          }
+        }
+      ]
+    },
+    "Pakuwon_Hartono_Mall": {
+      "expected_category": "commercial_mall",
+      "existed_in_2021_2022": true,
+      "historical_note": "Opened 2015 as Hartono Mall Yogyakarta; rebranded to Pakuwon Mall Jogja after late-2020 acquisition. OSM uses 'Pakuwon Mall Jogja' (with 'Hartono Mall' in alt/old_name).",
+      "is_captured": true,
+      "is_captured_in_study_categories": true,
+      "total_matching_elements": 8,
+      "category_matching_elements": 8,
+      "counts_by_osm_type": {
+        "node": 5,
+        "way": 3,
+        "relation": 0
+      },
+      "distinct_names_sample": [
+        "Halte Pakuwon Mall Jogja",
+        "Pakuwon Mall",
+        "Pakuwon Mall 2",
+        "Pakuwon Mall Jogja",
+        "Pakuwon Mall Solo Baru",
+        "Pakuwon Mall Yogyakarta",
+        "TPB Pakuwon Mall 2"
+      ],
+      "top_category_matches": [
+        {
+          "osm_id": "node/9833083225",
+          "osm_type": "node",
+          "name": "Halte Pakuwon Mall Jogja",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/10700984785",
+          "osm_type": "node",
+          "name": "TPB Pakuwon Mall 2",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/12712669002",
+          "osm_type": "node",
+          "name": "Pakuwon Mall",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/13114928013",
+          "osm_type": "node",
+          "name": "Pakuwon Mall Jogja",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "amenity": "bus_station",
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "node/13114928016",
+          "osm_type": "node",
+          "name": "Pakuwon Mall 2",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "amenity": "bus_station",
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "way/347449913",
+          "osm_type": "way",
+          "name": "Pakuwon Mall Solo Baru",
+          "alt_names": {},
+          "matched_categories": [
+            "commercial_mall"
+          ],
+          "key_tags": {
+            "shop": "mall",
+            "building": "commercial"
+          }
+        },
+        {
+          "osm_id": "way/696101029",
+          "osm_type": "way",
+          "name": "Pakuwon Mall Yogyakarta",
+          "alt_names": {},
+          "matched_categories": [
+            "commercial_mall"
+          ],
+          "key_tags": {
+            "shop": "mall",
+            "building": "commercial"
+          }
+        },
+        {
+          "osm_id": "way/1426677965",
+          "osm_type": "way",
+          "name": "Halte Pakuwon Mall Jogja",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "public_transport": "platform",
+            "building": "bus_station"
+          }
+        }
+      ]
+    },
+    "RSUP_Dr_Sardjito": {
+      "expected_category": "healthcare_hospital",
+      "existed_in_2021_2022": true,
+      "historical_note": "Opened 1982; primary tertiary referral hospital in DIY active in 2021-2022.",
+      "is_captured": true,
+      "is_captured_in_study_categories": true,
+      "total_matching_elements": 8,
+      "category_matching_elements": 8,
+      "counts_by_osm_type": {
+        "node": 5,
+        "way": 3,
+        "relation": 0
+      },
+      "distinct_names_sample": [
+        "Halte RS Sardjito (Barat)",
+        "Halte RS Sardjito (Timur)",
+        "ICC RSUP Dr. Sardjito",
+        "ICU RSUP Dr. Sardjito",
+        "Pusat Bedah Terpadu RS Sardjito",
+        "RS Sardjito",
+        "RSUP Dr. Sardjito"
+      ],
+      "top_category_matches": [
+        {
+          "osm_id": "node/3632596977",
+          "osm_type": "node",
+          "name": "Halte RS Sardjito (Timur)",
+          "alt_names": {
+            "alt_name": "Halte FK UGM"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/3632596978",
+          "osm_type": "node",
+          "name": "RS Sardjito",
+          "alt_names": {
+            "alt_name": "RSUP Dr. Sardjito"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "amenity": "bus_station",
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "node/5610698047",
+          "osm_type": "node",
+          "name": "RS Sardjito",
+          "alt_names": {
+            "alt_name": "FK UGM"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "amenity": "bus_station",
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "node/9837629180",
+          "osm_type": "node",
+          "name": "ICU RSUP Dr. Sardjito",
+          "alt_names": {},
+          "matched_categories": [
+            "healthcare_hospital"
+          ],
+          "key_tags": {
+            "healthcare": "hospital"
+          }
+        },
+        {
+          "osm_id": "node/10719232795",
+          "osm_type": "node",
+          "name": "Halte RS Sardjito (Barat)",
+          "alt_names": {
+            "alt_name": "Halte RSUP Dr. Sardjito"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "way/120418961",
+          "osm_type": "way",
+          "name": "Pusat Bedah Terpadu RS Sardjito",
+          "alt_names": {},
+          "matched_categories": [
+            "healthcare_hospital"
+          ],
+          "key_tags": {
+            "healthcare": "hospital",
+            "building": "hospital"
+          }
+        },
+        {
+          "osm_id": "way/337523520",
+          "osm_type": "way",
+          "name": "ICC RSUP Dr. Sardjito",
+          "alt_names": {},
+          "matched_categories": [
+            "healthcare_hospital"
+          ],
+          "key_tags": {
+            "amenity": "hospital",
+            "healthcare": "hospital",
+            "building": "yes"
+          }
+        },
+        {
+          "osm_id": "way/616520162",
+          "osm_type": "way",
+          "name": "RSUP Dr. Sardjito",
+          "alt_names": {},
+          "matched_categories": [
+            "healthcare_hospital"
+          ],
+          "key_tags": {
+            "amenity": "hospital",
+            "healthcare": "hospital"
+          }
+        }
+      ]
+    },
+    "Malioboro": {
+      "expected_category": "tourism_site / commercial_mall",
+      "existed_in_2021_2022": true,
+      "historical_note": "Historic central commercial & tourism corridor in Kota Yogyakarta ( includes Plaza Malioboro / Mall Malioboro, Teras Malioboro, and Jalan Malioboro).",
+      "is_captured": true,
+      "is_captured_in_study_categories": true,
+      "total_matching_elements": 16,
+      "category_matching_elements": 15,
+      "counts_by_osm_type": {
+        "node": 8,
+        "way": 8,
+        "relation": 0
+      },
+      "distinct_names_sample": [
+        "Halte Malioboro 1",
+        "Halte Malioboro 2",
+        "Jalan Malioboro",
+        "Malioboro 1",
+        "Malioboro 2",
+        "Malioboro 3",
+        "Malioboro Mall",
+        "Pasar Sore Malioboro",
+        "Plaza Malioboro",
+        "Teras Malioboro 1",
+        "Teras Malioboro 2"
+      ],
+      "top_category_matches": [
+        {
+          "osm_id": "node/3628566580",
+          "osm_type": "node",
+          "name": "Malioboro 3",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "node/3628566581",
+          "osm_type": "node",
+          "name": "Malioboro 3",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/3628566582",
+          "osm_type": "node",
+          "name": "Malioboro 1",
+          "alt_names": {
+            "alt_name": "Halte Malioboro 1 (Inna Garuda)"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "node/3628566583",
+          "osm_type": "node",
+          "name": "Malioboro 1",
+          "alt_names": {
+            "alt_name": "Halte Malioboro 1 (Inna Garuda)"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/3628566584",
+          "osm_type": "node",
+          "name": "Malioboro 2",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "node/3628566585",
+          "osm_type": "node",
+          "name": "Malioboro 2",
+          "alt_names": {
+            "alt_name": "Halte Malioboro 2 (Kepatihan)"
+          },
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/10701058399",
+          "osm_type": "node",
+          "name": "Teras Malioboro 2",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "highway": "bus_stop",
+            "public_transport": "platform"
+          }
+        },
+        {
+          "osm_id": "node/14218361349",
+          "osm_type": "node",
+          "name": "Teras Malioboro 2",
+          "alt_names": {},
+          "matched_categories": [
+            "transit_hub"
+          ],
+          "key_tags": {
+            "public_transport": "stop_position"
+          }
+        },
+        {
+          "osm_id": "way/283886493",
+          "osm_type": "way",
+          "name": "Teras Malioboro 1",
+          "alt_names": {},
+          "matched_categories": [
+            "traditional_market"
+          ],
+          "key_tags": {
+            "amenity": "marketplace",
+            "building": "yes"
+          }
+        },
+        {
+          "osm_id": "way/404716906",
+          "osm_type": "way",
+          "name": "Plaza Malioboro",
+          "alt_names": {},
+          "matched_categories": [
+            "commercial_mall"
+          ],
+          "key_tags": {
+            "shop": "mall",
+            "building": "commercial"
+          }
+        }
+      ]
+    }
+  }
+}

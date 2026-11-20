@@ -137,10 +137,10 @@ Each member selects and leads **one dedicated technical pillar** across the Meda
 
 | Role | PIC (Choose Role) | Pipeline Stage | Difficulty & Strategic Priority Flag | Primary Output / Modules |
 | :--- | :--- | :--- | :--- | :--- |
-| **Role 1: Data Ingestion & Temporal Cleaning Lead** | *[TBD — Open]* | Bronze $\rightarrow$ Silver (Temporal) | ⚡ **FIRST TO START (Week 1 Blocker)**<br>🛡️ **Foundation Gatekeeper** | `src/ingest.py`, `src/clean_temporal.py`, `data/raw/`, `data/silver/mobility_clean.parquet` |
-| **Role 2: Geospatial Engineering & Facility Deduplication Lead** | *[TBD — Open]* | Silver $\rightarrow$ Gold (Spatial) | ⚡ **FIRST TO START (Week 1 Blocker)**<br>🔥 **MOST TECHNICALLY DIFFICULT** | `src/spatial_join.py`, `configs/osm_tags.yaml`, `data/silver/grid_facilities.parquet` |
-| **Role 3: Mobility Analytics & Statistical Modeling Lead** | *[TBD — Open]* | Gold (Analytical Metrics) | ⭐ **MOST IMPORTANT / CRITICAL FOR GRADING & RESEARCH VALIDITY** | `src/metrics.py`, `data/gold/cell_metrics.parquet`, `data/gold/kapanewon_hourly.parquet` |
-| **Role 4: Geospatial Visualization & Interactive Map Lead** | *[TBD — Open]* | Serve & Visual Analytics | 🎯 **HIGH-IMPACT PRESENTATION DELIVERABLE** | `src/visualize.py`, `notebooks/visuals.ipynb`, `figures/`, `figures/city_magnets_map.html` |
+| **Role 1: Data Ingestion & Temporal Cleaning Lead** | *Altaf* | Bronze $\rightarrow$ Silver (Temporal) | ⚡ **FIRST TO START (Week 1 Blocker)**<br>🛡️ **Foundation Gatekeeper** | `src/ingest.py`, `src/clean_temporal.py`, `data/raw/`, `data/silver/mobility_clean.parquet` |
+| **Role 2: Geospatial Engineering & Facility Deduplication Lead** | *Nalen* | Silver $\rightarrow$ Gold (Spatial) | ⚡ **FIRST TO START (Week 1 Blocker)**<br>🔥 **MOST TECHNICALLY DIFFICULT** | `src/spatial_join.py`, `configs/osm_tags.yaml`, `data/silver/grid_facilities.parquet` |
+| **Role 3: Mobility Analytics & Statistical Modeling Lead** | *Rafi Busthami* | Gold (Analytical Metrics) | ⭐ **MOST IMPORTANT / CRITICAL FOR GRADING & RESEARCH VALIDITY** | `src/metrics.py`, `data/gold/cell_metrics.parquet`, `data/gold/kapanewon_hourly.parquet` |
+| **Role 4: Geospatial Visualization & Interactive Map Lead** | *Akhnaf* | Serve & Visual Analytics | 🎯 **HIGH-IMPACT PRESENTATION DELIVERABLE** | `src/visualize.py`, `notebooks/visuals.ipynb`, `figures/`, `figures/city_magnets_map.html` |
 
 ---
 

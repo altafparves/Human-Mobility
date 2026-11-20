@@ -1,0 +1,50 @@
+{
+  "verified_at_utc": "2026-11-15T04:16:56.895449+00:00",
+  "daily_grid": {
+    "file": "data/raw/presence_cell500m_daily.csv",
+    "rows": 183548,
+    "unique_cells": 5715,
+    "unique_dates": 151,
+    "date_min": "2021-12-01",
+    "date_max": "2022-04-30",
+    "total_possible_cell_days": 862965,
+    "observed_cell_day_fraction": 0.2127,
+    "n_maids_min": 5,
+    "n_maids_max": 10971,
+    "centroid_bounds_wgs84": {
+      "south": -8.17589,
+      "west": 110.031602,
+      "north": -7.578602,
+      "east": 110.816173
+    },
+    "derived_overpass_bbox_wgs84": {
+      "south": -8.1827,
+      "west": 110.024103,
+      "north": -7.571071,
+      "east": 110.823227,
+      "buffer_meters": 500.0,
+      "utm_bounds": {
+        "x_min": 392500.0,
+        "y_min": 9095500.0,
+        "x_max": 480500.0,
+        "y_max": 9163000.0
+      }
+    },
+    "silver_unique_cells_parquet": "data/silver/grid_cells_unique.parquet"
+  },
+  "hourly_kapanewon": {
+    "file": "data/raw/presence_kapanewon_hourly.csv",
+    "rows": 230418,
+    "unique_kab_kota": 5,
+    "unique_kapanewon": 78,
+    "unique_dates": 151,
+    "date_min": "2021-12-01",
+    "date_max": "2022-04-30",
+    "hour_min": 0,
+    "hour_max": 23,
+    "n_maids_min": 5,
+    "n_maids_max": 2506,
+    "n_pings_min": 5,
+    "n_pings_max": 10210
+  }
+}
