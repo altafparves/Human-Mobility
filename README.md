@@ -63,7 +63,8 @@ Human-Mobility/
 │   ├── spatial_join.py                # Role 2: EPSG:32749 grid reconstruction, OSM deduplication & spatial join
 │   ├── metrics.py                     # Role 3: Presence share, weekday/weekend ratios & statistical tests
 │   └── visualize.py                   # Role 4: Interactive Folium/Kepler map & static chart generators
-├── notebooks/                         # Exploratory analysis & visualization notebooks (e.g., visuals.ipynb)
+├── docs/                              # Role handoff documents (HANDOFF_ROLE1.md, HANDOFF_ROLE2.md)
+├── notebooks/                         # Role playgrounds (role1_playground.ipynb, role2_playground.ipynb) & visuals.ipynb
 ├── figures/                           # Exported static charts (.png/.svg) & interactive maps (.html)
 ├── tests/                             # Data quality & pipeline unit tests
 ├── project_brief_city_magnets_yogyakarta_refined.md   # Full methodological & technical project brief
@@ -86,6 +87,8 @@ Each member chooses **one dedicated technical role** below, while **Storytelling
 ### A. Technical Pipeline Roles (Open for Selection)
 
 > 📌 **Role 1 status: ✅ Complete.** See the handoff document [`docs/HANDOFF_ROLE1.md`](docs/HANDOFF_ROLE1.md) for what was built, how to use it, and next steps for Role 2 (Nalen), Role 3, and Role 4.
+>
+> 📌 **Role 2 status: ✅ Complete.** See [`docs/HANDOFF_ROLE2.md`](docs/HANDOFF_ROLE2.md) for the deduplication rules, the `grid_facilities.parquet` column guide for Role 3 (Rafi), and map notes for Role 4. Visual walkthrough: [`notebooks/role2_playground.ipynb`](notebooks/role2_playground.ipynb).
 
 | Role | PIC (Choose Role) | Pipeline Stage | Execution Order & Priority Flag | Key Responsibilities & Deliverables |
 | :--- | :--- | :--- | :--- | :--- |
