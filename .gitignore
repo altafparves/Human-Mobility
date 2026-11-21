@@ -39,6 +39,10 @@ data/silver/*
 data/gold/*
 !data/gold/.gitkeep
 
+# Synthetic development layers (tests/make_sample_*.py). Invented numbers:
+# they prove the pipeline runs and must never reach the report.
+data/_sample/
+
 # DuckDB / Databases
 *.duckdb
 *.duckdb.wal

@@ -89,6 +89,8 @@ Each member chooses **one dedicated technical role** below, while **Storytelling
 > 📌 **Role 1 status: ✅ Complete.** See the handoff document [`docs/HANDOFF_ROLE1.md`](docs/HANDOFF_ROLE1.md) for what was built, how to use it, and next steps for Role 2 (Nalen), Role 3, and Role 4.
 >
 > 📌 **Role 2 status: ✅ Complete.** See [`docs/HANDOFF_ROLE2.md`](docs/HANDOFF_ROLE2.md) for the deduplication rules, the `grid_facilities.parquet` column guide for Role 3 (Rafi), and map notes for Role 4. Visual walkthrough: [`notebooks/role2_playground.ipynb`](notebooks/role2_playground.ipynb).
+>
+> 📌 **Role 3 status: ✅ Complete.** See [`docs/HANDOFF_ROLE3.md`](docs/HANDOFF_ROLE3.md) for the eight Gold tables, the cost of each statistical decision, and what Role 4 (Akhnaf) should plot — including the four things that would undo the statistics. Headline rules: every ratio stays inside one sampling period, intervals resample Role 2's site clusters, and no single holiday-uplift value is produced because the Nataru window crosses the 1 January sample break.
 
 | Role | PIC (Choose Role) | Pipeline Stage | Execution Order & Priority Flag | Key Responsibilities & Deliverables |
 | :--- | :--- | :--- | :--- | :--- |
