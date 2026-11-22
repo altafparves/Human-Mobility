@@ -8,6 +8,7 @@
 
 ## Demo, documentation, and Colab
 
+- [Open the live interactive 500 m Yogyakarta spatial map (GitHub Pages)](https://altafparves.github.io/Human-Mobility/)
 - [Watch the five-minute City Magnets demo](https://youtu.be/YwWwRleElAA)
 - [Project brief and methodology](project_brief_city_magnets_yogyakarta_refined.md)
 - [Project documentation and handoffs](docs/) · [Visualization and demo handoff](docs/HANDOFF_TO_AKHNAF.md)
@@ -204,7 +205,7 @@ All visual outputs below are generated deterministically from the merged Silver 
 
 ### Interactive 500 m Map & Standalone Google Colab Notebooks
 
-Download [`figures/city_magnets_map.html`](figures/city_magnets_map.html) using GitHub's raw download and open it in any browser. The HTML embeds the 500 m grid, Leaflet runtime, DIY regency boundaries (`districts.geojson`), DIY major roads (`roads.geojson`), deduplicated OSM facility footprints, and all 9 audited DIY landmarks, so it works **100% offline** (with an optional toggleable online street basemap). The default view opens on **February 1–15, 2022**.
+Open the live map directly in your browser at **[https://altafparves.github.io/Human-Mobility/](https://altafparves.github.io/Human-Mobility/)**, or download [`figures/city_magnets_map.html`](figures/city_magnets_map.html) using GitHub's raw download for offline use. The HTML embeds the 500 m grid, Leaflet runtime, DIY regency boundaries (`districts.geojson`), DIY major roads (`roads.geojson`), deduplicated OSM facility footprints, and all 9 audited DIY landmarks, so it works **100% offline** (with an optional toggleable online street basemap). The default view opens on **February 1–15, 2022**.
 
 - Choose a sampling period in the layer control, or use **Color by** to switch between the weekday/weekend ratio, weekday publication coverage, and weekend publication coverage.
 - Click any $500\text{ m}$ square to compare its weekday and weekend shares and inspect its coverage in the side panel.
