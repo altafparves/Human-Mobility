@@ -343,10 +343,37 @@ def diurnal(path, period):
             f"{peak.kapanewon.title()} had the highest weekday device count shown, "
             f"peaking at {int(peak.hour_wib):02d}:00 WIB."
         )
+    if period == "2021_Dec":
+        examples = data[data.is_peak_hour & data.kapanewon_code.isin(order)].copy()
+        examples["district"] = examples.kapanewon.str.casefold()
+        hours = examples.pivot_table(
+            index="district", columns="day_type", values="hour_wib"
+        )
+        examples_order = ["gamping", "banguntapan", "kasihan"]
+        if set(examples_order) <= set(hours.index) and {"weekday", "weekend"} <= set(
+            hours
+        ):
+            chosen = hours.loc[examples_order, ["weekday", "weekend"]]
+            if chosen.notna().all().all():
+
+                def time(hour):
+                    hour = int(hour)
+                    return f"{hour % 12 or 12} {'a.m.' if hour < 12 else 'p.m.'}"
+
+                gamping, banguntapan, kasihan = [
+                    (time(row.weekday), time(row.weekend))
+                    for row in chosen.itertuples()
+                ]
+                result = (
+                    "Peak hours changed by different amounts. Weekday to weekend peaks (WIB)\n"
+                    f"Gamping {gamping[0]} → {gamping[1]}  ·  "
+                    f"Banguntapan {banguntapan[0]} → {banguntapan[1]}  ·  "
+                    f"Kasihan {kasihan[0]} → {kasihan[1]}"
+                )
     heading(
         fig,
         f"Hourly rhythms across ten kapanewon  |  {PERIOD_NAMES.get(period, period)}",
-        "What we built: The left shows devices by hour. The right shows how often they reported.\n"
+        "What we built: The left shows devices by hour. The right shows location signals per device.\n"
         "Circles mark the busiest hour. Gray means data is missing.\n"
         f"What we found: {result}",
     )
