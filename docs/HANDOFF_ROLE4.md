@@ -25,3 +25,5 @@ For February 1–15, 2022, 1,628 of 5,715 grid cells have a ratio. Of these, 829
 JogjaPulse supplies device observations. Facility and landmark geometry is from OpenStreetMap contributors under the ODbL. City and regency boundaries are from [geoBoundaries Indonesia ADM2](https://www.geoboundaries.org/api/current/gbOpen/IDN/ADM2/) under CC BY 3.0 IGO and credited to Statistics Indonesia, WFP and OCHA ROAP. The HTML embeds Leaflet under the license in `src/assets/leaflet/LICENSE`. Detailed road geometry is unavailable in this export.
 
 The standalone Colab notebooks embed a snapshot of the upstream summary tables. The repository CLI uses the current generated local tables. The raw JogjaPulse files and generated Silver and Gold tables are excluded from the commit.
+
+For presentation priorities and signoff, see the [PM handoff](HANDOFF_ROLE4_PM.md).
