@@ -1,4 +1,4 @@
-"""Build the City Magnets map and three figures from the Silver and Gold tables."""
+"""Build the City Magnets map and core analytical figures from the Silver and Gold tables."""
 
 import argparse
 import html
@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from branca.element import Element, MacroElement, Template
+from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
 
 from .metrics import PRIMARY_PERIODS
 from .spatial_join import build_grid_polygons
@@ -41,6 +43,7 @@ LABELS = {
 }
 MISSING = "#d9dfe2"
 BREAK = pd.Timestamp("2022-01-01")
+DEFAULT_MAP_PERIOD = "2022_Feb_P1"
 
 
 def read(layer, name, columns):
@@ -84,15 +87,150 @@ def heading(fig, title, description):
         title + "\n" + description,
         x=0.025,
         ha="left",
-        fontsize=16,
+        fontsize=15.5,
         color="#163c45",
-        fontweight="medium",
     )
 
 
 def save(fig, path):
     fig.savefig(path, dpi=155, bbox_inches="tight", facecolor="white")
     plt.close(fig)
+
+
+def pull(path):
+    """Render RQ1 Facility Pull: median weekday/weekend presence share (%) with site-cluster CIs."""
+    table = gold(
+        "facility_pull",
+        "sampling_period category cells clusters median_share_weekday_pct ci_low ci_high median_share_weekend_pct evidence",
+    )
+    periods = [p for p in PRIMARY_PERIODS if p in set(table.sampling_period)]
+    if not periods:
+        periods = sorted(set(table.sampling_period))
+    cats = [c for c in LABELS if c in set(table.category)]
+    fig, axes = plt.subplots(
+        (len(periods) + 1) // 2,
+        2,
+        figsize=(16, 3.9 * ((len(periods) + 1) // 2)),
+        layout="constrained",
+        squeeze=False,
+    )
+    for ax, period in zip(axes.flat, periods):
+        rows = (
+            table[table.sampling_period.eq(period)].set_index("category").reindex(cats)
+        )
+        base_val = (
+            rows.at["baseline_candidate", "median_share_weekday_pct"]
+            if "baseline_candidate" in rows.index
+            and rows.at["baseline_candidate", "evidence"] == "reported"
+            else np.nan
+        )
+        if pd.notna(base_val):
+            ax.axvline(base_val, color="#647482", ls="--", lw=1.1, zorder=1)
+        for i, (cat, row) in enumerate(rows.iterrows()):
+            if row.evidence == "reported":
+                ax.barh(
+                    i,
+                    row.median_share_weekday_pct,
+                    color=COLORS[cat],
+                    height=0.48,
+                    alpha=0.92,
+                )
+                ax.plot([row.ci_low, row.ci_high], [i, i], color="#14242b", lw=2.5)
+                if pd.notna(row.median_share_weekend_pct):
+                    ax.scatter(
+                        row.median_share_weekend_pct,
+                        i,
+                        marker="o",
+                        s=30,
+                        color="white",
+                        edgecolor="#182933",
+                        zorder=4,
+                    )
+            counts = (
+                "no eligible cells"
+                if pd.isna(row.cells)
+                else f"{int(row.cells):,} / {int(row.clusters):,}"
+            )
+            ax.text(
+                1.02,
+                i,
+                ("withheld   " if str(row.evidence).startswith("withheld") else "")
+                + counts,
+                transform=ax.get_yaxis_transform(),
+                va="center",
+                fontsize=8,
+            )
+        ax.set_yticks(range(len(cats)), [LABELS[c] for c in cats])
+        for tick_label, cat_key in zip(ax.get_yticklabels(), cats):
+            if cat_key == "education_campus":
+                tick_label.set_fontweight("bold")
+                tick_label.set_color("#005689")
+        ax.invert_yaxis()
+        ax.set_title(
+            PERIOD_NAMES.get(period, period), loc="left", fontweight="bold", pad=18
+        )
+        ax.text(1.02, 1.02, "Cells / clusters", transform=ax.transAxes, fontsize=8)
+        ax.grid(axis="x", alpha=0.14)
+        ax.set_axisbelow(True)
+        ax.set_xlabel("Median restricted presence share (%)")
+    for ax in list(axes.flat)[len(periods) :]:
+        ax.set_visible(False)
+    legend_handles = [
+        Patch(facecolor="#0072B2", label="Weekday median share (≥90% coverage)"),
+        Line2D([0], [0], color="#14242b", lw=2.5, label="95% site-cluster bootstrap CI"),
+        Line2D(
+            [0],
+            [0],
+            marker="o",
+            color="none",
+            markerfacecolor="white",
+            markeredgecolor="#182933",
+            markersize=6,
+            label="Weekend median share",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color="#647482",
+            ls="--",
+            lw=1.1,
+            label="Baseline candidate weekday median",
+        ),
+    ]
+    fig.legend(
+        handles=legend_handles,
+        loc="outside lower center",
+        frameon=True,
+        facecolor="white",
+        edgecolor="#d9dfe2",
+        fontsize=9.5,
+        ncol=4,
+    )
+    reported = table[
+        table.sampling_period.isin(periods)
+        & (table.evidence == "reported")
+        & (table.category != "baseline_candidate")
+    ]
+    top_count = 0
+    if not reported.empty:
+        leaders = reported.loc[
+            reported.groupby("sampling_period")["median_share_weekday_pct"].idxmax()
+        ]
+        top_count = (leaders.category == "commercial_mall").sum()
+    result = (
+        f"Mall and campus cells drew higher relative weekday presence than baseline candidates across all {len(periods)} primary periods "
+        f"(malls led in {top_count} of {len(periods)} periods)."
+        if len(periods)
+        else "The data did not support a facility pull comparison."
+    )
+    heading(
+        fig,
+        "Relative device presence share by facility category (RQ1)",
+        "What we built: Bars show median weekday presence share (%) among eligible cells within each period.\n"
+        "Lines show 95% site-cluster bootstrap intervals. White circles show median weekend share.\n"
+        f"What we found: {result}",
+    )
+    save(fig, path)
 
 
 def rhythm(path):
@@ -152,6 +290,10 @@ def rhythm(path):
                 fontsize=8,
             )
         ax.set_yticks(range(len(cats)), [LABELS[c] for c in cats])
+        for tick_label, cat_key in zip(ax.get_yticklabels(), cats):
+            if cat_key == "education_campus":
+                tick_label.set_fontweight("bold")
+                tick_label.set_color("#005689")
         ax.invert_yaxis()
         ax.axvline(1, color="#52616a", ls="--", lw=1)
         ax.set_title(
@@ -166,6 +308,30 @@ def rhythm(path):
         ax.set_xlim(min(1, bounds.min()) - 0.05, max(1, bounds.max()) + 0.05)
     for ax in list(axes.flat)[len(periods) :]:
         ax.set_visible(False)
+    legend_handles = [
+        Patch(facecolor="#0072B2", label="All eligible cells (≥90% coverage)"),
+        Line2D([0], [0], color="#14242b", lw=2.5, label="95% site-cluster bootstrap CI"),
+        Line2D(
+            [0],
+            [0],
+            marker="D",
+            color="none",
+            markerfacecolor="white",
+            markeredgecolor="#182933",
+            markersize=6,
+            label="Single-category cells only",
+        ),
+        Line2D([0], [0], color="#52616a", ls="--", lw=1, label="1.0 = Equal weekday & weekend share"),
+    ]
+    fig.legend(
+        handles=legend_handles,
+        loc="outside lower center",
+        frameon=True,
+        facecolor="white",
+        edgecolor="#d9dfe2",
+        fontsize=9.5,
+        ncol=4,
+    )
     campus = table[
         (table.category == "education_campus") & (table.evidence == "reported")
     ]
@@ -188,7 +354,7 @@ def rhythm(path):
 def holiday(path):
     event = gold(
         "event_window",
-        "date category sampling_period median_relative_presence evidence",
+        "date category sampling_period median_relative_presence cells_with_support evidence",
     )
     cov = read(
         "silver", "daily_coverage_summary", "date daily_cell_coverage_pct"
@@ -205,7 +371,8 @@ def holiday(path):
     limits = (min(1, usable.min()) - 0.05, max(1, usable.max()) + 0.05)
     for i, cat in enumerate(cats):
         ax = fig.add_subplot(layout[i // 2, i % 2])
-        for _, group in event[event.category.eq(cat)].groupby("sampling_period"):
+        cat_rows = event[event.category.eq(cat)]
+        for _, group in cat_rows.groupby("sampling_period"):
             y = group.set_index(pd.to_datetime(group.date))
             series = y.median_relative_presence.where(
                 y.evidence.eq("exploratory")
@@ -218,18 +385,89 @@ def holiday(path):
             BREAK + pd.Timedelta(hours=8),
             color="#f3dfce",
         )
+        if i == 0:
+            ax.text(
+                BREAK,
+                limits[1] - 0.03 * (limits[1] - limits[0]),
+                "1 Jan break\n(withheld)",
+                ha="center",
+                va="top",
+                fontsize=7.5,
+                color="#7c4d25",
+                fontweight="bold",
+            )
         ax.set(
             ylim=limits,
             xticks=dates[[0, 4, 8, 9]],
             xticklabels=["24 Dec", "28 Dec", "1 Jan", "2 Jan"],
         )
+        supp = cat_rows.loc[
+            cat_rows.evidence.eq("exploratory"), "cells_with_support"
+        ].dropna()
+        supp_label = (
+            f" ({int(supp.min())}–{int(supp.max())} cells)"
+            if not supp.empty and supp.min() != supp.max()
+            else (f" ({int(supp.iloc[0])} cells)" if not supp.empty else "")
+        )
         ax.set_title(
-            LABELS[cat], loc="left", color=COLORS[cat], fontweight="bold", fontsize=12
+            LABELS[cat] + supp_label,
+            loc="left",
+            color=COLORS[cat],
+            fontweight="bold",
+            fontsize=11.5,
         )
         ax.spines[["top", "right"]].set_visible(False)
+    if len(cats) % 2 == 1:
+        legend_ax = fig.add_subplot(layout[rows - 1, 1])
+        legend_ax.axis("off")
+        holiday_handles = [
+            Line2D(
+                [0],
+                [0],
+                color="#0072B2",
+                marker="o",
+                markersize=4,
+                lw=2,
+                label="Relative presence vs matched weekday in period",
+            ),
+            Line2D(
+                [0],
+                [0],
+                color="#778b92",
+                ls=":",
+                lw=1.2,
+                label="1.0 = Non-holiday same-weekday baseline",
+            ),
+            Patch(
+                facecolor="#f3dfce",
+                edgecolor="none",
+                label="1 Jan 2022 sampling break (estimate withheld)",
+            ),
+            Patch(
+                facecolor="#43828a",
+                edgecolor="none",
+                label="Daily grid publication coverage (% of 5,715 cells)",
+            ),
+        ]
+        legend_ax.legend(
+            handles=holiday_handles,
+            loc="center left",
+            frameon=True,
+            facecolor="white",
+            edgecolor="#d9dfe2",
+            fontsize=9.5,
+            title="How to read this chart (exploratory RQ3)",
+            title_fontsize=10,
+        )
     bottom = fig.add_subplot(layout[-1, :])
     bottom.bar(
         dates, cov.daily_cell_coverage_pct.reindex(dates), color="#43828a", width=0.68
+    )
+    bottom.axvspan(
+        BREAK - pd.Timedelta(hours=11),
+        BREAK + pd.Timedelta(hours=11),
+        color="#f3dfce",
+        zorder=0,
     )
     bottom.set(
         xticks=dates, xticklabels=dates.strftime("%d %b"), ylabel="Grid published (%)"
@@ -247,7 +485,7 @@ def holiday(path):
     if pd.notna(christmas) and pd.notna(later):
 
         def describe(ratio):
-            return f"{abs(ratio - 1):.0%} {'above' if ratio >= 1 else 'below'} normal"
+            return f"{abs(ratio - 1):.0%} {'above' if ratio >= 1 else 'below'} matched same-weekday baseline"
 
         result = (
             f"Tourism cells were {describe(christmas)} on Dec 25 and "
@@ -280,11 +518,17 @@ def diurnal(path, period):
         .index
     )
     names = data.drop_duplicates("kapanewon_code").set_index("kapanewon_code").kapanewon
-    fig, axes = plt.subplots(2, 2, figsize=(15, 8), layout="constrained")
+    fig, axes = plt.subplots(
+        2,
+        2,
+        figsize=(15.5, 8.2),
+        layout="constrained",
+        gridspec_kw={"width_ratios": [1.3, 1.0]},
+    )
     for j, (metric, title) in enumerate(
         [
-            ("median_n_maids", "Median observed devices"),
-            ("median_pings_per_maid", "Median pings per device"),
+            ("median_n_maids", "Median observed devices (○ = peak hour)"),
+            ("median_pings_per_maid", "Median pings per device (reporting intensity)"),
         ]
     ):
         grids = [
@@ -293,8 +537,7 @@ def diurnal(path, period):
             .reindex(index=order, columns=range(24))
             for day in ("weekday", "weekend")
         ]
-        palette = plt.get_cmap(("YlGnBu", "magma")[j]).copy()
-        palette.set_bad(MISSING)
+        palette = plt.get_cmap(("YlGnBu", "magma")[j]).with_extremes(bad=MISSING)
         for ax, grid, day in zip(axes[:, j], grids, ("weekday", "weekend")):
             im = ax.imshow(
                 grid,
@@ -380,7 +623,7 @@ def diurnal(path, period):
     save(fig, path)
 
 
-def spatial_map(path, period):
+def spatial_map(path, period=DEFAULT_MAP_PERIOD):
     grid = read(
         "silver",
         "grid_facilities",
@@ -428,6 +671,15 @@ def spatial_map(path, period):
             f"<style>{styles}\n.leaflet-container {{ background: #f4f2eb; }}</style>"
         )
     )
+    folium.TileLayer(
+        tiles="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+        attr="© OpenStreetMap contributors · © CARTO",
+        name="Street basemap (online)",
+        overlay=True,
+        control=True,
+        show=True,
+        opacity=0.55,
+    ).add_to(m)
     context = assets.parent / "yogyakarta"
     for filename, label, style in [
         (
@@ -579,12 +831,18 @@ def spatial_map(path, period):
         },
     ).add_to(m)
     landmarks = folium.FeatureGroup(name="Landmark labels").add_to(m)
-    for name in [
-        "Universitas Gadjah Mada",
-        "Prambanan Temple Compounds",
-        "Stasiun Wates",
-        "RSUD Wonosari",
-    ]:
+    landmark_specs = [
+        ("Universitas Gadjah Mada", "top"),
+        ("Universitas Negeri Yogyakarta", "bottom"),
+        ("RSUP Dr. Sardjito", "left"),
+        ("Pakuwon Mall Yogyakarta", "right"),
+        ("Plaza Ambarrukmo", "right"),
+        ("Malioboro Mall", "left"),
+        ("Prambanan Temple Compounds", "right"),
+        ("Stasiun Wates", "left"),
+        ("RSUD Wonosari", "right"),
+    ]
+    for name, direction in landmark_specs:
         match = sites.loc[sites.name.eq(name), "geometry"]
         if not match.empty:
             point = match.iloc[0].representative_point()
@@ -596,7 +854,7 @@ def spatial_map(path, period):
                 tooltip=folium.Tooltip(
                     name,
                     permanent=True,
-                    direction="left" if name == "Universitas Gadjah Mada" else "right",
+                    direction=direction,
                 ),
             ).add_to(landmarks)
     folium.LayerControl(collapsed=False).add_to(m)
@@ -740,14 +998,16 @@ def spatial_map(path, period):
     m.save(str(path))
 
 
-def build(period=PRIMARY_PERIODS[0], output=None):
+def build(period=PRIMARY_PERIODS[0], output=None, map_period=None):
     output = Path(output or ROOT / "figures")
     output.mkdir(parents=True, exist_ok=True)
+    initial_map_period = map_period or period
     products = {
-        "city_magnets_map.html": lambda p: spatial_map(p, period),
+        "city_magnets_map.html": lambda p: spatial_map(p, initial_map_period),
         "weekday_weekend_ratio.png": rhythm,
         "nataru_timeseries.png": holiday,
         "kapanewon_diurnal_heatmap.png": lambda p: diurnal(p, period),
+        "facility_pull.png": pull,
     }
     with (
         TemporaryDirectory(dir=output) as temp,
@@ -770,8 +1030,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--period",
-        default=PRIMARY_PERIODS[0],
-        help="Initial map layer and heatmap sampling period",
+        default=None,
+        help="Sampling period for the heatmap and initial map layer (defaults: heatmap=2021_Dec, map=2022_Feb_P1)",
     )
-    for product in build(parser.parse_args().period):
+    parser.add_argument(
+        "--map-period",
+        default=None,
+        help="Override initial sampling period shown on the interactive map",
+    )
+    args = parser.parse_args()
+    heatmap_period = args.period or PRIMARY_PERIODS[0]
+    initial_map = args.map_period or args.period or DEFAULT_MAP_PERIOD
+    for product in build(heatmap_period, map_period=initial_map):
         print(product)

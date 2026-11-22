@@ -63,10 +63,10 @@ Human-Mobility/
 │   ├── spatial_join.py                # Role 2: EPSG:32749 grid reconstruction, OSM deduplication & spatial join
 │   ├── metrics.py                     # Role 3: Presence share, weekday/weekend ratios & statistical tests
 │   └── visualize.py                   # Role 4: Interactive Folium/Kepler map & static chart generators
-├── docs/                              # Role handoff documents (HANDOFF_ROLE1.md, HANDOFF_ROLE2.md)
-├── notebooks/                         # Role playgrounds (role1_playground.ipynb, role2_playground.ipynb) & visuals.ipynb
-├── figures/                           # Exported static charts (.png/.svg) & interactive maps (.html)
-├── tests/                             # Data quality & pipeline unit tests
+├── docs/                              # Role handoff documents (HANDOFF_ROLE1.md .. HANDOFF_ROLE4.md)
+├── notebooks/                         # Role playgrounds, visuals.ipynb & standalone Colab notebooks
+├── figures/                           # Exported static charts (.png) & interactive map (city_magnets_map.html)
+├── tests/                             # Data quality & pipeline unit tests (Roles 1–4, 40 contract tests)
 ├── project_brief_city_magnets_yogyakarta_refined.md   # Full methodological & technical project brief
 ├── requirements.txt                   # Python dependencies
 └── README.md                          # Project documentation
@@ -91,6 +91,8 @@ Each member chooses **one dedicated technical role** below, while **Storytelling
 > 📌 **Role 2 status: ✅ Complete.** See [`docs/HANDOFF_ROLE2.md`](docs/HANDOFF_ROLE2.md) for the deduplication rules, the `grid_facilities.parquet` column guide for Role 3 (Rafi), and map notes for Role 4. Visual walkthrough: [`notebooks/role2_playground.ipynb`](notebooks/role2_playground.ipynb).
 >
 > 📌 **Role 3 status: ✅ Complete.** See [`docs/HANDOFF_ROLE3.md`](docs/HANDOFF_ROLE3.md) for the eight Gold tables, the cost of each statistical decision, and what Role 4 (Akhnaf) should plot — including the four things that would undo the statistics. Headline rules: every ratio stays inside one sampling period, intervals resample Role 2's site clusters, and no single holiday-uplift value is produced because the Nataru window crosses the 1 January sample break.
+>
+> 📌 **Role 4 status: ✅ Complete.** See [`docs/HANDOFF_ROLE4.md`](docs/HANDOFF_ROLE4.md) for the interactive 500 m Leaflet/Folium map ([`figures/city_magnets_map.html`](figures/city_magnets_map.html)), the four static figures covering RQ1–RQ4 (`facility_pull.png`, `weekday_weekend_ratio.png`, `nataru_timeseries.png`, `kapanewon_diurnal_heatmap.png`), executed walkthrough and standalone Colab notebooks in `notebooks/`, and presentation talking points.
 
 | Role | PIC (Choose Role) | Pipeline Stage | Execution Order & Priority Flag | Key Responsibilities & Deliverables |
 | :--- | :--- | :--- | :--- | :--- |
@@ -188,6 +190,7 @@ Upload any of these notebooks to Google Colab and choose **Runtime → Run all**
 
 | Notebook | Figure |
 | --- | --- |
-| [Weekday/weekend ratio](notebooks/weekday_weekend_ratio.ipynb) | [PNG](figures/weekday_weekend_ratio.png) |
-| [Nataru time series](notebooks/nataru_timeseries.ipynb) | [PNG](figures/nataru_timeseries.png) |
-| [Kapanewon diurnal heatmap](notebooks/kapanewon_diurnal_heatmap.ipynb) | [PNG](figures/kapanewon_diurnal_heatmap.png) |
+| [Facility pull (RQ1)](notebooks/facility_pull.ipynb) | [PNG](figures/facility_pull.png) |
+| [Weekday/weekend ratio (RQ2)](notebooks/weekday_weekend_ratio.ipynb) | [PNG](figures/weekday_weekend_ratio.png) |
+| [Nataru time series (RQ3)](notebooks/nataru_timeseries.ipynb) | [PNG](figures/nataru_timeseries.png) |
+| [Kapanewon diurnal heatmap (RQ4)](notebooks/kapanewon_diurnal_heatmap.ipynb) | [PNG](figures/kapanewon_diurnal_heatmap.png) |
