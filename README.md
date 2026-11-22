@@ -175,3 +175,19 @@ python -m src.visualize
 * **Mobility Data:** JogjaPulse dataset via Zenodo ([Record 23157460](https://zenodo.org/records/23157460)).
 * **Spatial Facility Data:** © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, available under the Open Database License (ODbL).
 
+
+## Role 4 interactive map and Colab notebooks
+
+Download [city_magnets_map.html](figures/city_magnets_map.html) using GitHub's raw download and open it in a browser. The map embeds the grid, Leaflet, and Yogyakarta boundaries, so the downloaded file works offline. The supplied export opens on February 1–15, 2022.
+
+- Choose a period in the layer control. Use **Color by** to switch between the weekday/weekend ratio, weekday publication coverage, and weekend publication coverage.
+- Click a 500 m square to compare its weekday and weekend shares and inspect its coverage. The selected cell stays in the side panel when you switch periods.
+- Read the valid-cell count above the map before interpreting the colors. See the [Role 4 handoff](docs/HANDOFF_ROLE4.md) for metric definitions, source tables, and reproduction commands.
+
+Upload any of these notebooks to Google Colab and choose **Runtime → Run all**. The notebooks include the summary tables for the supplied figures and can run independently of the repository.
+
+| Notebook | Figure |
+| --- | --- |
+| [Weekday/weekend ratio](notebooks/weekday_weekend_ratio.ipynb) | [PNG](figures/weekday_weekend_ratio.png) |
+| [Nataru time series](notebooks/nataru_timeseries.ipynb) | [PNG](figures/nataru_timeseries.png) |
+| [Kapanewon diurnal heatmap](notebooks/kapanewon_diurnal_heatmap.ipynb) | [PNG](figures/kapanewon_diurnal_heatmap.png) |
