@@ -58,3 +58,5 @@ data/_sample/
 .vscode/
 *.swp
 
+# Codex local files
+.codex/
