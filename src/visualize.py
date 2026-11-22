@@ -166,10 +166,21 @@ def rhythm(path):
         ax.set_xlim(min(1, bounds.min()) - 0.05, max(1, bounds.max()) + 0.05)
     for ax in list(axes.flat)[len(periods) :]:
         ax.set_visible(False)
+    campus = table[
+        (table.category == "education_campus") & (table.evidence == "reported")
+    ]
+    above = campus.median_ratio.gt(1).sum()
+    result = (
+        f"Campus cells leaned weekday in {above} of {len(campus)} periods with an estimate."
+        if len(campus)
+        else "The data did not support a campus comparison."
+    )
     heading(
         fig,
         "Weekday and weekend presence by facility",
-        "Bars extend from parity (1.0)  ·  lines show 95% cluster intervals  ·  diamonds show single-category cells",
+        "What we built: Bars compare weekday and weekend shares. 1.0 means equal shares.\n"
+        "Lines show the range of uncertainty. Diamonds show cells with a single facility category.\n"
+        f"What we found: {result}",
     )
     save(fig, path)
 
@@ -226,10 +237,28 @@ def holiday(path):
     bottom.set_title(
         "Daily publication coverage", loc="left", fontsize=12, fontweight="bold"
     )
+    tourism = event[
+        event.category.eq("tourism_site") & event.evidence.eq("exploratory")
+    ]
+    tourism = tourism.set_index(pd.to_datetime(tourism.date)).median_relative_presence
+    christmas = tourism.get(pd.Timestamp("2021-12-25"), np.nan)
+    later = tourism.get(pd.Timestamp("2021-12-29"), np.nan)
+    result = "January 1 is skipped because the sample changed."
+    if pd.notna(christmas) and pd.notna(later):
+
+        def describe(ratio):
+            return f"{abs(ratio - 1):.0%} {'above' if ratio >= 1 else 'below'} normal"
+
+        result = (
+            f"Tourism cells were {describe(christmas)} on Dec 25 and "
+            f"{describe(later)} on Dec 29.\n" + result
+        )
     heading(
         fig,
         "Christmas and New Year in Yogyakarta",
-        "Relative presence against matched weekdays  ·  1.0 = baseline  ·  shaded January 1 = sampling break",
+        "What we built: Lines compare each holiday date with the same day of the week outside the holiday.\n"
+        "The bottom bars show how much of the map had published data.\n"
+        f"What we found: {result}",
     )
     save(fig, path)
 
@@ -302,10 +331,24 @@ def diurnal(path, period):
             pad=0.06,
             label=title,
         )
+    peaks = data[
+        data.is_peak_hour
+        & data.day_type.eq("weekday")
+        & data.kapanewon_code.isin(order)
+    ].dropna(subset=["median_n_maids"])
+    result = "Weekday peak hours are unavailable."
+    if not peaks.empty:
+        peak = peaks.loc[peaks.median_n_maids.idxmax()]
+        result = (
+            f"{peak.kapanewon.title()} had the highest weekday device count shown, "
+            f"peaking at {int(peak.hour_wib):02d}:00 WIB."
+        )
     heading(
         fig,
         f"Hourly rhythms across ten kapanewon  |  {PERIOD_NAMES.get(period, period)}",
-        "Ranked by median device presence  ·  circles mark peak hours  ·  gray cells have no published value",
+        "What we built: The left shows devices by hour. The right shows how often they reported.\n"
+        "Circles mark the busiest hour. Gray means data is missing.\n"
+        f"What we found: {result}",
     )
     save(fig, path)
 
@@ -463,10 +506,10 @@ def spatial_map(path, period):
         ratio = view.wd_we_ratio_restricted
         label = f"Ratio · {period_title}"
         summaries[label] = (
-            f"{ratio.count():,} of {len(view):,} cells have a ratio. "
-            f"{ratio.ge(1.05).sum():,} weekday-leaning · "
-            f"{ratio.lt(0.95).sum():,} weekend-leaning · "
-            f"{ratio.between(0.95, 1.05, inclusive='left').sum():,} near parity."
+            f"{ratio.count():,} of {len(view):,} squares have enough data to compare. "
+            f"{ratio.ge(1.05).sum():,} had a higher weekday share · "
+            f"{ratio.lt(0.95).sum():,} had a higher weekend share · "
+            f"{ratio.between(0.95, 1.05, inclusive='left').sum():,} had similar shares."
         )
         view["Reading"] = ratio.map(
             lambda x: (
@@ -542,7 +585,7 @@ def spatial_map(path, period):
     )
     m.get_root().html.add_child(
         Element(
-            '<div style="position:absolute;bottom:32px;left:12px;z-index:950;background:white;border-left:5px solid #28595d;border-radius:5px;box-shadow:0 2px 14px #0002;padding:14px;max-width:min(400px,65vw);font:13px/1.55 Arial"><b>Yogyakarta | Device presence by 500 m cell</b><br><span id="ratio-key">Click a square to compare weekday and weekend shares.<br><b>Teal</b> weekday-leaning · <b>Orange</b> weekend-leaning<br>'
+            '<div style="position:absolute;bottom:32px;left:12px;z-index:950;background:white;border-left:5px solid #28595d;border-radius:5px;box-shadow:0 2px 14px #0002;padding:14px;max-width:min(400px,65vw);font:13px/1.55 Arial"><b>Yogyakarta | Device presence by 500 m cell</b><br><span id="ratio-key">Click a square to compare weekday and weekend shares.<br><b>Teal</b> had a higher weekday share · <b>Orange</b> weekend-leaning<br>'
             + legend(
                 [
                     "&lt;0.80",
@@ -566,7 +609,7 @@ def spatial_map(path, period):
     )
     m.get_root().html.add_child(
         Element(
-            '<div style="position:absolute;top:12px;left:54px;z-index:950;background:white;padding:10px 14px;border-radius:6px;font:14px Arial;color:#153c45"><strong>Yogyakarta mobility explorer</strong><br>Choose a period, then click a cell.<br><label>Color by <select id="map-metric"><option value="">Weekday / weekend ratio</option><option>Weekday coverage</option><option>Weekend coverage</option></select></label><br><span id="coverage-key"></span><br><span id="period-summary" aria-live="polite"></span></div>'
+            '<div style="position:absolute;top:12px;left:54px;z-index:950;background:white;padding:10px 14px;border-radius:6px;max-width:min(460px,54vw);font:14px Arial;color:#153c45"><strong>Yogyakarta mobility explorer</strong><br><p><b>What we built</b><br>Each square is a 500 m area. Choose a period and click a square.</p><label>Color by <select id="map-metric"><option value="">Weekday / weekend ratio</option><option>Weekday coverage</option><option>Weekend coverage</option></select></label><br><span id="coverage-key"></span><br><b>What we found</b><br><span id="period-summary" aria-live="polite"></span></div>'
         )
     )
     m.get_root().html.add_child(
@@ -705,4 +748,3 @@ if __name__ == "__main__":
     )
     for product in build(parser.parse_args().period):
         print(product)
-
