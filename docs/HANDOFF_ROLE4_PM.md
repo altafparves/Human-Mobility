@@ -25,3 +25,24 @@ Tambahkan jalan utama jika tersedia data jalan yang bisa disertakan secara offli
 Handoff ini siap ditutup ketika tim bisa menjelaskan satu hasil dari tiap visual, ketiga notebook berhasil di Colab, dan peta berjalan offline di laptop presentasi. Penyempurnaan ini berada dalam lingkup Role 4 dan memakai tabel hasil dari pipeline yang sudah digabungkan.
 
 Panduan teknis dan perintah untuk membuat ulang visual tersedia di [handoff teknis Role 4](HANDOFF_ROLE4.md).
+
+---
+
+## Status Penyelesaian Tim (Update Terbaru — Merged ke `main`)
+
+Seluruh catatan perbaikan pada tabel di atas beserta tambahan visual RQ1 dari `HANDOFF_ROLE3.md` **sudah selesai diimplementasikan dan di-merge ke `main`**:
+
+1. **Peta Interaktif (`figures/city_magnets_map.html`):**
+   * ✅ **Jalan utama offline (`src/assets/yogyakarta/roads.geojson`)** dari OpenStreetMap (ODbL) sudah disertakan langsung di dalam HTML, ditambah opsi toggle *Street basemap (online)*.
+   * ✅ **9 landmark lengkap** (6 landmark *Week 1 DIY Audit*: UGM, UNY, RSUP Dr. Sardjito, Pakuwon Mall, Plaza Ambarrukmo, Malioboro Mall + Prambanan, Stasiun Wates, RSUD Wonosari) sudah diberi label dengan arah *tooltip* yang tidak saling bertumpuk.
+2. **Grafik Baru RQ1 (`figures/facility_pull.png` & `notebooks/facility_pull.ipynb`):**
+   * ✅ Menambahkan visualisasi `facility_pull.parquet` (porsi kehadiran hari kerja %, 95% *site-cluster bootstrap CI*, penanda porsi akhir pekan, dan garis referensi *baseline candidates*).
+3. **Grafik Hari Kerja dan Akhir Pekan (`figures/weekday_weekend_ratio.png`):**
+   * ✅ Label **Campuses** sudah disorot tebal (*bold*), garis referensi `1.0` dan *uncertainty interval* dilengkapi kotak legenda di bawah grafik.
+4. **Grafik Natal dan Tahun Baru (`figures/nataru_timeseries.png`):**
+   * ✅ Kata *"normal"* sudah diganti menjadi *"matched same-weekday baseline"*, area **1 Jan break (withheld)** diberi label langsung + kotak legenda *How to read this chart*, dan jumlah *supported cells* ditampilkan di setiap subjudul kategori.
+5. **Heatmap Kapanewon (`figures/kapanewon_diurnal_heatmap.png`):**
+   * ✅ Panel kiri (`Median observed devices`) sudah diberi ruang horizontal lebih lebar (`1.3 : 1.0`) dibanding panel kanan (`Median pings per device`).
+6. **Notebook & Automated Tests (`notebooks/` & `tests/test_role4_visualize.py`):**
+   * ✅ `notebooks/visuals.ipynb` dan keempat notebook Colab sudah dijalankan ulang dengan output gambar tersimpan.
+   * ✅ 8 *contract & guardrail tests* Role 4 ditambahkan (`python -m pytest -q tests/` $\rightarrow$ **40 passed**).

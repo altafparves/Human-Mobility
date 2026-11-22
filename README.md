@@ -173,24 +173,46 @@ python -m src.visualize
 
 ---
 
-## 7. License & Attribution
-* **Mobility Data:** JogjaPulse dataset via Zenodo ([Record 23157460](https://zenodo.org/records/23157460)).
-* **Spatial Facility Data:** © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, available under the Open Database License (ODbL).
+## 7. Key Findings & Visual Deliverables (RQ1–RQ4)
 
+All visual outputs below are generated deterministically from the merged Silver and Gold layers via `python -m src.visualize` and verified by **40 automated contract tests** (`python -m pytest -q tests/`).
 
-## Role 4 interactive map and Colab notebooks
+| Research Question / Hypothesis | Headline Finding (Verified Gold Metrics) | Primary Deliverable |
+| :--- | :--- | :--- |
+| **Spatial Coverage & Map Context** | Out of **5,715** grid cells ($500\text{ m} \times 500\text{ m}$), **700** (Dec 2021), **705** (Jan 2022), **1,628** (Feb 1–15), and **407** (Feb 16–28) pass the $\ge 90\%$ ordinary weekday *and* weekend coverage bar. In Feb 1–15, **829 cells** lean weekday ($\ge 1.05$), **498** lean weekend ($< 0.95$), and **301** sit near parity ($0.95\text{–}<1.05$). | [`figures/city_magnets_map.html`](figures/city_magnets_map.html) |
+| **RQ1: Facility Pull** | Facility-associated cells draw higher median weekday presence shares than unmapped baseline candidate cells across all 4 primary periods. **Malls** ($0.103\%\text{–}0.316\%$) and **Campuses** ($0.067\%\text{–}0.191\%$) lead every period against baseline candidates ($0.023\%\text{–}0.119\%$). Observational 1:1 matching confirms positive differences for campuses while disclosing residual activity imbalance ($\text{SMD up to } 0.57$). | [`figures/facility_pull.png`](figures/facility_pull.png)<br>[`notebooks/facility_pull.ipynb`](notebooks/facility_pull.ipynb) |
+| **RQ2: Weekly Rhythm (`H1–H3`)** | • **H1 (Education — Campuses):** **Supported in 4/4 primary periods** and robust across single-category diamonds ($\diamond$) and $80\%/90\%/95\%$ coverage rules (median weekday/weekend ratio **$1.291$** in Dec 2021, **$1.152$** in Feb 1–15, **$1.138$** in Feb 16–28; compressing to **$1.022$** during the Jan 2022 academic break).<br>• **H2 (Commercial, Markets & Tourism):** Analyzed separately, showing distinct regimes — shifting weekend-leaning in Jan 2022 (**Malls $0.893$**, **Tourism $0.964$**, **Markets $0.969$**), with single-category markets sitting much closer to parity ($0.98\text{–}1.04$) than mixed-use cells.<br>• **H3 (Healthcare — Hospitals):** Weekday-leaning ($1.012\text{–}1.290$) due to outpatient schedules and urban co-location, sitting below campuses in February. | [`figures/weekday_weekend_ratio.png`](figures/weekday_weekend_ratio.png)<br>[`notebooks/weekday_weekend_ratio.ipynb`](notebooks/weekday_weekend_ratio.ipynb) |
+| **RQ3: Holiday Shockwave (*Nataru*)** | Compared against matched non-event weekdays in Dec 2021, **Tourism** cells rose **$+29\%$ ($1.29$)** on Christmas Day (`2021-12-25`) before dipping **$-36\%$ ($0.64$)** on `2021-12-29` and recovering on New Year's Eve. **1 January 2022** is an upstream panel discontinuity (coverage drops from $27.5\%$ to $23.9\%$) and is explicitly withheld so a panel step change is never misread as holiday travel. | [`figures/nataru_timeseries.png`](figures/nataru_timeseries.png)<br>[`notebooks/nataru_timeseries.ipynb`](notebooks/nataru_timeseries.ipynb) |
+| **RQ4: Diurnal Pulse (*Kapanewon*)** | Across the 10 busiest *kapanewon* ($0\text{–}23\text{ WIB}$), urban/campus hubs peak around midday on weekdays (**Gamping** $12\text{:00} \rightarrow 11\text{:00 WIB}$ on weekends; **Depok** $13\text{:00 WIB}$), whereas commuter rings peak in the evening on weekdays and shift earlier on weekends (**Banguntapan** $19\text{:00} \rightarrow 14\text{:00 WIB}$; **Kasihan** $20\text{:00 WIB}$). Ping intensity (`n_pings / n_maids`) diagnoses app reporting behavior rather than crowd size. | [`figures/kapanewon_diurnal_heatmap.png`](figures/kapanewon_diurnal_heatmap.png)<br>[`notebooks/kapanewon_diurnal_heatmap.ipynb`](notebooks/kapanewon_diurnal_heatmap.ipynb) |
 
-Download [city_magnets_map.html](figures/city_magnets_map.html) using GitHub's raw download and open it in a browser. The map embeds the grid, Leaflet, and Yogyakarta boundaries, so the downloaded file works offline. The supplied export opens on February 1–15, 2022.
+### Visual Gallery
 
-- Choose a period in the layer control. Use **Color by** to switch between the weekday/weekend ratio, weekday publication coverage, and weekend publication coverage.
-- Click a 500 m square to compare its weekday and weekend shares and inspect its coverage. The selected cell stays in the side panel when you switch periods.
-- Read the valid-cell count above the map before interpreting the colors. See the [Role 4 handoff](docs/HANDOFF_ROLE4.md) for metric definitions, source tables, and reproduction commands.
+| RQ1: Facility Pull | RQ2: Weekly Rhythm (H1–H3) |
+| :---: | :---: |
+| ![RQ1 Facility Pull](figures/facility_pull.png) | ![RQ2 Weekly Rhythm](figures/weekday_weekend_ratio.png) |
+| **RQ3: Nataru Holiday Window (with Coverage Panel)** | **RQ4: 24-Hour Kapanewon Diurnal Heatmap** |
+| ![RQ3 Nataru Holiday Window](figures/nataru_timeseries.png) | ![RQ4 Kapanewon Diurnal Heatmap](figures/kapanewon_diurnal_heatmap.png) |
 
-Upload any of these notebooks to Google Colab and choose **Runtime → Run all**. The notebooks include the summary tables for the supplied figures and can run independently of the repository.
+### Interactive 500 m Map & Standalone Google Colab Notebooks
+
+Download [`figures/city_magnets_map.html`](figures/city_magnets_map.html) using GitHub's raw download and open it in any browser. The HTML embeds the 500 m grid, Leaflet runtime, DIY regency boundaries (`districts.geojson`), DIY major roads (`roads.geojson`), deduplicated OSM facility footprints, and all 9 audited DIY landmarks, so it works **100% offline** (with an optional toggleable online street basemap). The default view opens on **February 1–15, 2022**.
+
+- Choose a sampling period in the layer control, or use **Color by** to switch between the weekday/weekend ratio, weekday publication coverage, and weekend publication coverage.
+- Click any $500\text{ m}$ square to compare its weekday and weekend shares and inspect its coverage in the side panel.
+- Read the valid-cell count above the map before interpreting colors. See [`docs/HANDOFF_ROLE4.md`](docs/HANDOFF_ROLE4.md) and [`notebooks/visuals.ipynb`](notebooks/visuals.ipynb) for full details.
+
+Each figure also has a self-contained Google Colab notebook (`notebooks/*.ipynb`) with embedded Gold/Silver summary tables (**Runtime → Run all**):
 
 | Notebook | Figure |
-| --- | --- |
-| [Facility pull (RQ1)](notebooks/facility_pull.ipynb) | [PNG](figures/facility_pull.png) |
-| [Weekday/weekend ratio (RQ2)](notebooks/weekday_weekend_ratio.ipynb) | [PNG](figures/weekday_weekend_ratio.png) |
-| [Nataru time series (RQ3)](notebooks/nataru_timeseries.ipynb) | [PNG](figures/nataru_timeseries.png) |
-| [Kapanewon diurnal heatmap (RQ4)](notebooks/kapanewon_diurnal_heatmap.ipynb) | [PNG](figures/kapanewon_diurnal_heatmap.png) |
+| :--- | :--- |
+| [`notebooks/facility_pull.ipynb`](notebooks/facility_pull.ipynb) | [`figures/facility_pull.png`](figures/facility_pull.png) |
+| [`notebooks/weekday_weekend_ratio.ipynb`](notebooks/weekday_weekend_ratio.ipynb) | [`figures/weekday_weekend_ratio.png`](figures/weekday_weekend_ratio.png) |
+| [`notebooks/nataru_timeseries.ipynb`](notebooks/nataru_timeseries.ipynb) | [`figures/nataru_timeseries.png`](figures/nataru_timeseries.png) |
+| [`notebooks/kapanewon_diurnal_heatmap.ipynb`](notebooks/kapanewon_diurnal_heatmap.ipynb) | [`figures/kapanewon_diurnal_heatmap.png`](figures/kapanewon_diurnal_heatmap.png) |
+
+---
+
+## 8. License & Attribution
+* **Mobility Data:** JogjaPulse dataset via Zenodo ([Record 23157460](https://zenodo.org/records/23157460)).
+* **Spatial Facility & Road Data:** © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, available under the Open Database License (ODbL).
+* **Administrative Boundaries:** [geoBoundaries Indonesia ADM2](https://www.geoboundaries.org/api/current/gbOpen/IDN/ADM2/) (CC BY 3.0 IGO — Statistics Indonesia / BPS, WFP, OCHA ROAP).
