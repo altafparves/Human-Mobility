@@ -6,6 +6,15 @@
 
 ---
 
+## Demo, documentation, and Colab
+
+- [Watch the five-minute City Magnets demo](https://youtu.be/YwWwRleElAA)
+- [Project brief and methodology](project_brief_city_magnets_yogyakarta_refined.md)
+- [Project documentation and handoffs](docs/) · [Visualization and demo handoff](docs/HANDOFF_TO_AKHNAF.md)
+- [Find out how we process the data here (Colab preview)](https://colab.research.google.com/github/altafparves/Human-Mobility/blob/main/notebooks/visuals.ipynb) — opens the current visualization walkthrough while the dedicated data-processing notebook is being prepared.
+
+---
+
 ## 1. Project Overview
 
 Using anonymized mobile device presence data (**JogjaPulse**) and **OpenStreetMap (OSM)** spatial features, this project investigates how observed mobile device activity across the Special Region of Yogyakarta (DIY) differs between $500\text{ m} \times 500\text{ m}$ grid cells containing **university campuses, hospitals, shopping malls, traditional markets, tourism sites, and transit stops**, and how those activity rhythms shift across weekdays, weekends, and the Christmas & New Year (*Nataru*) holiday period.
