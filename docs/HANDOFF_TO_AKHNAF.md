@@ -1,94 +1,94 @@
-# 📌 Handoff Balik untuk Akhnaf — Penyelesaian & Finalisasi Role 4 (Visualization)
+# 📌 Handoff Back to Akhnaf — Role 4 Completion & Finalization (`role4/visualization` → `main`)
 
-**Dari:** Altaf (PM / Role 1)  
-**Untuk:** Akhnaf (Role 4 — Geospatial Visualization & Interactive Map Lead)  
-**Branch:** `main` & `role4/visualization` (sudah disinkronkan penuh)  
-**Status:** ✅ **Role 4 100% Selesai & Merged ke `main`** (`40/40 pytest passed`)
+**From:** Altaf (PM / Role 1)  
+**To:** Akhnaf (Role 4 — Geospatial Visualization & Interactive Map Lead)  
+**Branches:** `main` & `role4/visualization` (fully synced)  
+**Status:** ✅ **Role 4 100% Complete & Merged to `main`** (`40/40 pytest passed`)
 
 ---
 
 ## 1. TL;DR
 
-Karena keterbatasan token di sesimu sebelumnya, kami sudah mengambil alih dan menuntaskan **seluruh daftar perbaikan di [`docs/HANDOFF_ROLE4_PM.md`](HANDOFF_ROLE4_PM.md)** sekaligus melengkapi permintaan visual **RQ1 Facility Pull** dari [`docs/HANDOFF_ROLE3.md`](HANDOFF_ROLE3.md) (§5).
+To help with your token limits, we stepped in to finish the remaining items in [`docs/HANDOFF_ROLE4_PM.md`](HANDOFF_ROLE4_PM.md) and added the **RQ1 Facility Pull** chart requested by [`docs/HANDOFF_ROLE3.md`](HANDOFF_ROLE3.md) (§5).
 
-Semua pekerjaanmu tetap menjadi fondasi utama Role 4 (`src/visualize.py`, `figures/`, dan notebook Colab), dan sekarang sudah dipoles, dilengkapi *unit tests*, dijalankan ulang dengan data Gold asli, serta di-merge ke `main`.
+Your work remains the core of Role 4 (`src/visualize.py`, `figures/`, and the standalone Colab notebooks). Everything has now been polished, covered by unit tests, re-executed against the real Gold/Silver tables, and merged into `main`.
 
 ---
 
-## 2. Cara Sinkronisasi Repo Lokalmu (`git pull`)
+## 2. How to Sync Your Local Repository (`git pull`)
 
-Sebelum membuka atau mengubah file di laptopmu, jalankan perintah ini di terminal:
+Before opening or editing any files locally, run:
 
 ```bash
 git fetch --all
 git checkout main
 git pull origin main
 
-# Jika kamu masih ingin berada di branch role4/visualization:
+# Or if you prefer staying on the role4/visualization branch:
 git checkout role4/visualization
 git pull origin role4/visualization
 ```
 
-*(Kedua branch `main` dan `role4/visualization` sudah menunjuk ke commit terbaru yang sama).*
+*(Both `main` and `role4/visualization` point to the exact same latest commit).*
 
 ---
 
-## 3. Apa Saja yang Sudah Kita Bantu Selesaikan di Atas Kerjaanmu
+## 3. What Was Completed on Top of Your Work
 
-### A. Tindak Lanjut Checklist [`docs/HANDOFF_ROLE4_PM.md`](HANDOFF_ROLE4_PM.md)
+### A. PM Review Checklist Items ([`docs/HANDOFF_ROLE4_PM.md`](HANDOFF_ROLE4_PM.md))
 
-| Item di `HANDOFF_ROLE4_PM.md` | Masalah Sebelumnya | Solusi yang Sudah Diterapkan | File Terkait |
+| Item in `HANDOFF_ROLE4_PM.md` | Previous Gap | What We Implemented | Affected Files |
 | :--- | :--- | :--- | :--- |
-| **1. Jalan utama di Peta Interaktif** | Jalan utama belum tersedia secara offline sehingga orientasi saat zoom-in terbatas. | Menambahkan geometri jalan utama DIY (`trunk` & `primary` highway dari OSM under ODbL, 62 KB) ke `src/assets/yogyakarta/roads.geojson` yang langsung ter-embed **offline** di HTML, ditambah opsi layer **Street basemap (online)** (CARTO Positron). | [`src/assets/yogyakarta/roads.geojson`](../src/assets/yogyakarta/roads.geojson)<br>[`figures/city_magnets_map.html`](../figures/city_magnets_map.html) |
-| **2. Label Landmark di Peta** | Baru ada 4 label landmark (`UGM`, `Prambanan`, `Stasiun Wates`, `RSUD Wonosari`). | Melengkapi menjadi **9 landmark** (seluruh 6 landmark *Week 1 DIY Audit*: **UGM, UNY, RSUP Dr. Sardjito, Pakuwon Mall, Plaza Ambarrukmo, Malioboro Mall** + 3 anchor regional) dengan arah tooltip (`top`/`bottom`/`left`/`right`) yang tidak saling bertumpuk. | [`src/visualize.py`](../src/visualize.py)<br>[`figures/city_magnets_map.html`](../figures/city_magnets_map.html) |
-| **3. Grafik Hari Kerja vs. Akhir Pekan (RQ2)** | Grafik cukup padat untuk slide; perlu sorotan pada kampus, penjelasan garis `1.0`, dan legenda garis ketidakpastian. | Menebalkan (*bold* biru) label **Campuses** di sumbu-Y pada keempat panel periode, serta menambahkan kotak legenda di bagian bawah untuk menjelaskan **Bar** (`All eligible cells ≥90%`), **Garis Hitam** (`95% site-cluster bootstrap CI`), **Diamond Putih** (`Single-category cells only`), dan **Garis Putus-putus** (`1.0 = Equal weekday & weekend share`). | [`figures/weekday_weekend_ratio.png`](../figures/weekday_weekend_ratio.png)<br>[`notebooks/weekday_weekend_ratio.ipynb`](../notebooks/weekday_weekend_ratio.ipynb) |
-| **4. Grafik Natal & Tahun Baru (RQ3)** | Kata *"normal"* kurang tepat secara metodologis; nilai 1 Januari harus jelas terlihat kosong/di-withhold. | Mengganti kata *"normal"* menjadi ***"matched same-weekday baseline"***, menambahkan label teks langsung **`1 Jan break (withheld)`** pada pita vertikal 1 Januari, menampilkan jumlah *supported cells* di setiap judul panel (mis. `Campuses (69–75 cells)`), dan menambahkan kotak panduan baca (*How to read this chart*) di slot kanan-bawah. | [`figures/nataru_timeseries.png`](../figures/nataru_timeseries.png)<br>[`notebooks/nataru_timeseries.ipynb`](../notebooks/nataru_timeseries.ipynb) |
-| **5. Heatmap Kapanewon (RQ4)** | Panel kiri (`Median observed devices`) butuh ruang lebih besar untuk slide dibanding panel kanan (`Median pings per device`). | Mengatur `gridspec_kw={"width_ratios": [1.3, 1.0]}` sehingga panel kiri lebih lebar, memperjelas keterangan `○ = peak hour` di judul panel kiri, dan menandai panel kanan sebagai `(reporting intensity)`. | [`figures/kapanewon_diurnal_heatmap.png`](../figures/kapanewon_diurnal_heatmap.png)<br>[`notebooks/kapanewon_diurnal_heatmap.ipynb`](../notebooks/kapanewon_diurnal_heatmap.ipynb) |
+| **1. Offline Major Roads on Interactive Map** | Major road geometry was unavailable offline, limiting spatial orientation when zoomed in. | Extracted and simplified DIY trunk & primary highways from OpenStreetMap (ODbL, 62 KB) into `src/assets/yogyakarta/roads.geojson` (embedded **offline** inside the HTML), plus added an optional toggleable **Street basemap (online)** layer (CARTO Positron). | [`src/assets/yogyakarta/roads.geojson`](../src/assets/yogyakarta/roads.geojson)<br>[`figures/city_magnets_map.html`](../figures/city_magnets_map.html) |
+| **2. Landmark Labels on Map** | Only 4 landmarks were labeled (`UGM`, `Prambanan`, `Stasiun Wates`, `RSUD Wonosari`). | Expanded to **9 landmarks** covering all 6 *Week 1 DIY Audit* landmarks (**UGM, UNY, RSUP Dr. Sardjito, Pakuwon Mall, Plaza Ambarrukmo, Malioboro Mall**) plus 3 regional anchors, with non-overlapping tooltip directions (`top`/`bottom`/`left`/`right`). | [`src/visualize.py`](../src/visualize.py)<br>[`figures/city_magnets_map.html`](../figures/city_magnets_map.html) |
+| **3. Weekday vs. Weekend Ratio Chart (RQ2)** | Dense at slide size; needed stronger emphasis on campuses, clarity on the `1.0` parity line, and a legend for uncertainty bars & diamonds. | Highlighted **Campuses** in bold blue on the y-axis across all four period panels, and added a bottom legend box explaining the **Colored Bar** (`All eligible cells ≥90%`), **Black Line** (`95% site-cluster bootstrap CI`), **White Diamond** (`Single-category cells only`), and **Dashed Line** (`1.0 = Equal weekday & weekend share`). | [`figures/weekday_weekend_ratio.png`](../figures/weekday_weekend_ratio.png)<br>[`notebooks/weekday_weekend_ratio.ipynb`](../notebooks/weekday_weekend_ratio.ipynb) |
+| **4. Christmas & New Year Time-Series (RQ3)** | Wording *"normal"* needed to be replaced with matched same-weekday baseline wording; Jan 1 break needed a direct visual callout. | Replaced *"normal"* with ***"matched same-weekday baseline"***, added a direct **`1 Jan break (withheld)`** text annotation on the Jan 1 shaded band, displayed `cells_with_support` ranges in each category subplot title (e.g., `Campuses (69–75 cells)`), and placed a *How to read this chart (exploratory RQ3)* legend box in the bottom-right panel slot. | [`figures/nataru_timeseries.png`](../figures/nataru_timeseries.png)<br>[`notebooks/nataru_timeseries.ipynb`](../notebooks/nataru_timeseries.ipynb) |
+| **5. Kapanewon Diurnal Heatmap (RQ4)** | Left panels (`Median observed devices`) needed more horizontal room on slides than right panels (`Median pings per device`). | Set `gridspec_kw={"width_ratios": [1.3, 1.0]}` to widen the left panels, labeled `○ = peak hour` in the left panel titles, and explicitly labeled the right panels `(reporting intensity)`. | [`figures/kapanewon_diurnal_heatmap.png`](../figures/kapanewon_diurnal_heatmap.png)<br>[`notebooks/kapanewon_diurnal_heatmap.ipynb`](../notebooks/kapanewon_diurnal_heatmap.ipynb) |
 
 ---
 
-### B. Tambahan Deliverables Sesuai [`docs/HANDOFF_ROLE3.md`](HANDOFF_ROLE3.md) & Standar Tim
+### B. Additional Deliverables from [`docs/HANDOFF_ROLE3.md`](HANDOFF_ROLE3.md) & Team Standards
 
-1. **Chart & Notebook Baru untuk RQ1 Facility Pull (`facility_pull.png` & `facility_pull.ipynb`):**
-   * Menambahkan fungsi `pull()` di [`src/visualize.py`](../src/visualize.py) yang memvisualisasikan `data/gold/facility_pull.parquet` (median porsi kehadiran hari kerja `%` per kategori di 4 periode utama, 95% *site-cluster bootstrap CI*, titik porsi akhir pekan, dan garis referensi *baseline candidates*).
-   * Membuat standalone Google Colab notebook [`notebooks/facility_pull.ipynb`](../notebooks/facility_pull.ipynb) dengan *embedded data snapshot* seperti 3 notebook Colab buatanmu.
-2. **Eksekusi Penuh [`notebooks/visuals.ipynb`](../notebooks/visuals.ipynb):**
-   * Sebelumnya cell di `visuals.ipynb` masih belum di-run (`outputs: []`). Sekarang sudah dieksekusi penuh terhadap data Silver & Gold asli, lengkap dengan preview ke-5 visual + tabel diagnostik (`matched_comparison`, `coverage_sensitivity`, `event_window`) sehingga langsung tampil saat dibuka di GitHub.
+1. **New RQ1 Facility Pull Chart & Colab Notebook (`facility_pull.png` & `facility_pull.ipynb`):**
+   * Added `pull()` in [`src/visualize.py`](../src/visualize.py) to plot `data/gold/facility_pull.parquet` (median ordinary-weekday restricted presence share `%` across the 4 primary periods, 95% site-cluster bootstrap CIs, weekend median share markers, and the unmapped `baseline_candidate` reference line).
+   * Created a matching standalone Google Colab notebook [`notebooks/facility_pull.ipynb`](../notebooks/facility_pull.ipynb) with an embedded compressed table snapshot.
+2. **Executed [`notebooks/visuals.ipynb`](../notebooks/visuals.ipynb) End-to-End:**
+   * Previously, code cells in `visuals.ipynb` had empty outputs (`execution_count: null`). It is now fully executed against the real Silver & Gold tables with all 5 visuals and diagnostic tables (`matched_comparison`, `coverage_sensitivity`, `event_window`) saved in the notebook so it renders directly on GitHub.
 3. **Automated Contract & Guardrail Tests ([`tests/test_role4_visualize.py`](../tests/test_role4_visualize.py)):**
-   * Menambahkan **8 unit tests** khusus Role 4 untuk memastikan ke-5 file di `figures/` ter-generate valid, Leaflet & jalan utama ter-embed offline, ke-9 landmark ada di peta, dan ke-4 guardrail statistik Role 3 (tidak mem-plot baris `withheld` sebagai nol, memisahkan 1 Januari, tidak menggabungkan lintas `sampling_period`) terjaga.
-   * Total test suite sekarang: **`python -m pytest -q tests/` $\rightarrow$ 40 passed, 0 warnings** (Role 1: 5, Role 2: 7, Role 3: 20, Role 4: 8).
-4. **Penyempurnaan [`docs/HANDOFF_ROLE4.md`](HANDOFF_ROLE4.md) & [`README.md`](../README.md):**
-   * Melengkapi `HANDOFF_ROLE4.md` dengan tabel pemenuhan spesifikasi brief, panduan interpretasi 5 visual, dan rangkuman angka temuan RQ1–RQ4.
-   * Menambahkan status **`Role 4 status: ✅ Complete`** dan bagian **Key Findings & Visual Gallery (RQ1–RQ4)** di halaman depan `README.md`.
+   * Added **8 unit tests** for Role 4 verifying atomic generation of all 5 outputs, offline Leaflet + boundary + major road embedding, presence of all 9 landmarks, and strict adherence to Role 3's 4 statistical guardrails (withheld rows never plotted as zero, Jan 1 isolated as `NaN`, no pooling across `sampling_period`).
+   * Full repository test suite: **`python -m pytest -q tests/` $\rightarrow$ 40 passed, 0 warnings** (Role 1: 5, Role 2: 7, Role 3: 20, Role 4: 8).
+4. **Expanded [`docs/HANDOFF_ROLE4.md`](HANDOFF_ROLE4.md) & [`README.md`](../README.md):**
+   * Upgraded `HANDOFF_ROLE4.md` to match the format of Roles 1–3 (requirement-by-requirement verification table, visual reading guide, and verified headline numbers for RQ1–RQ4).
+   * Marked **`Role 4 status: ✅ Complete`** and added Section 7 (**Key Findings & Visual Deliverables RQ1–RQ4**) with an embedded visual gallery to the front page of `README.md`.
 
 ---
 
-## 4. Cheat-Sheet Angka & Poin Narasi Bagianmu (Role 4) untuk Video 5 Menit eLOK & Presentasi
+## 4. Your Talking Points & Verified Numbers (Role 4 Segment — 5-Minute eLOK Video & Slides)
 
-Saat kamu membawakan bagian **Visualisasi & Temuan Akhir** (~1,25 menit di video eLOK dan saat presentasi kelas), kamu bisa langsung memakai angka-angka yang sudah terverifikasi di grafikmu ini:
+When presenting the **Visual Analytics & Headline Findings** segment (~1.25 minutes in the 5-minute video and during the live Q&A), use these verified numbers:
 
-1. **Peta Interaktif 500 m (`figures/city_magnets_map.html`):**
-   * Dari **5.715 kotak grid ($500\text{ m} \times 500\text{ m}$)** di DIY, pada periode dengan cakupan terluas (**1–15 Februari 2022**) terdapat **1.628 kotak ($28,5\%$)** yang lolos syarat cakupan publikasi $\ge 90\%$ di hari kerja *dan* akhir pekan.
-   * Dari 1.628 kotak tersebut: **829 kotak ($\ge 1,05$, warna teal)** condong ke hari kerja (*weekday-leaning*), **498 kotak ($< 0,95$, warna oranye)** condong ke akhir pekan (*weekend-leaning*), dan **301 kotak ($0,95\text{–}<1,05$)** seimbang.
+1. **Interactive 500 m Spatial Map (`figures/city_magnets_map.html`):**
+   * Out of **5,715 grid cells ($500\text{ m} \times 500\text{ m}$)** across DIY, **1,628 cells ($28.5\%$)** clear the $\ge 90\%$ ordinary weekday *and* weekend publication coverage rule in **February 1–15, 2022 (`2022_Feb_P1`)** (compared to 700 in Dec 2021, 705 in Jan 2022, and 407 in Feb 16–28).
+   * Among those 1,628 comparable cells: **829 ($\ge 1.05$, teal)** are weekday-leaning, **498 ($< 0.95$, orange)** are weekend-leaning, and **301 ($0.95\text{–}<1.05$, cream)** sit near parity.
 2. **RQ1 — Facility Pull (`figures/facility_pull.png`):**
-   * Kotak yang memuat fasilitas secara konsisten memiliki median porsi kehadiran hari kerja (*restricted presence share*) lebih tinggi dibanding kotak pembanding tanpa fasilitas terpetakan (*baseline candidates*) di keempat periode utama.
-   * **Malls** ($0,103\%\text{–}0,316\%$) dan **Campuses** ($0,067\%\text{–}0,191\%$) selalu menempati posisi teratas di atas *baseline candidates* ($0,023\%\text{–}0,119\%$).
-3. **RQ2 — Weekly Rhythm & Hipotesis H1–H3 (`figures/weekday_weekend_ratio.png`):**
-   * **H1 (Campuses):** **Terbukti konsisten di 4 dari 4 periode utama** (rasio $> 1,0$), yaitu **$1,291$** (Des 2021), **$1,152$** (1–15 Feb), dan **$1,138$** (16–28 Feb), serta turun mendekati $1,0$ (**$1,022$**) pada **Januari 2022** saat masa libur antar-semester. Hasil ini tetap kokoh pada subset *single-category* (simbol diamond $\diamond$) maupun ambang cakupan $80\% / 90\% / 95\%$.
-   * **H2 (Malls, Markets, Tourism):** Menunjukkan pola musiman yang berbeda-beda; pada **Januari 2022** ketiganya berbalik condong ke akhir pekan (**Malls $0,893$**, **Tourism $0,964$**, **Markets $0,969$**). Khusus **Markets**, kotak *single-category* ($\diamond$) jauh lebih dekat ke $1,0$ ($0,98\text{–}1,04$) dibanding kotak *mixed-use*.
-   * **H3 (Hospitals):** Condong ke hari kerja ($1,012\text{–}1,290$) karena jadwal poliklinik rawat jalan dan lokasi di pusat kota, namun di bawah kampus pada bulan Februari.
+   * Facility-associated cells draw higher median weekday presence shares than unmapped baseline candidate cells across all 4 primary periods.
+   * **Malls** ($0.103\%\text{–}0.316\%$) and **Campuses** ($0.067\%\text{–}0.191\%$) rank highest in every period compared against baseline candidates ($0.023\%\text{–}0.119\%$). Because 1:1 matching leaves residual activity imbalance ($\text{SMD up to } 0.57$), we report these as **observational spatial associations**, not causal effects.
+3. **RQ2 — Weekly Rhythm & Hypotheses H1–H3 (`figures/weekday_weekend_ratio.png`):**
+   * **H1 (Campuses):** **Supported across all 4 primary periods** ($> 1.0$) — **$1.291$** in Dec 2021 (95% CI $[1.206, 1.404]$), **$1.152$** in Feb 1–15 (CI $[1.127, 1.196]$), and **$1.138$** in Feb 16–28 (CI $[1.096, 1.216]$), compressing near parity (**$1.022$**) during the **January 2022** academic break. This holds across single-category diamonds ($\diamond$) and $80\% / 90\% / 95\%$ coverage thresholds.
+   * **H2 (Malls, Markets, Tourism):** Evaluated separately, they show distinct seasonal regimes — shifting below $1.0$ (weekend-leaning) in **January 2022** (**Malls $0.893$**, **Tourism $0.964$**, **Markets $0.969$**). For **Markets**, single-category cells ($\diamond$) sit much closer to parity ($0.98\text{–}1.04$) than mixed-use cells.
+   * **H3 (Hospitals):** Weekday-leaning ($1.012\text{–}1.290$) reflecting weekday outpatient clinic schedules and urban co-location, sitting below campuses in February.
 4. **RQ3 — Holiday Shockwave / Nataru (`figures/nataru_timeseries.png`):**
-   * Dibandingkan dengan hari yang sama di luar periode libur pada bulan yang sama, kehadiran relatif di kotak **Tourism** naik **$+29\%$ ($1,29\times$)** pada Hari Natal (`25 Des 2021`), lalu turun **$-36\%$ ($0,64\times$)** pada pertengahan minggu (`29 Des 2021`) sebelum pulih menjelang malam Tahun Baru.
-   * **1 Januari 2022** dikosongkan (*withheld*) karena cakupan grid turun mendadak dari $27,5\%$ ke $23,9\%$ akibat pergantian sampel hulu (*sample break*), sehingga kita tidak menyimpulkan penurunan perangkat pada 1 Januari sebagai efek liburan.
-5. **RQ4 — Diurnal Pulse Kapanewon (`figures/kapanewon_diurnal_heatmap.png`):**
-   * Pada Desember 2021, kapanewon pusat kampus/perkotaan mencapai puncak di siang hari pada hari kerja (**Gamping** pukul `12.00 WIB` $\rightarrow$ bergeser ke `11.00 WIB` di akhir pekan; **Depok** pukul `13.00 WIB`).
-   * Kapanewon komuter/permukiman mencapai puncak di malam hari pada hari kerja dan bergeser maju ke siang hari saat akhir pekan (**Banguntapan** dari `19.00 WIB` $\rightarrow$ `14.00 WIB`; **Kasihan** tetap di `20.00 WIB`).
-   * Panel kanan (`median_pings_per_maid`) adalah diagnostik intensitas sinyal aplikasi (terlihat lebih tinggi di **Seyegan** dan **Pakem**, serta turun serentak pukul `08.00–10.00 WIB`), bukan ukuran jumlah orang.
+   * Relative to matched non-event weekdays in Dec 2021, **Tourism** cells rose **$+29\%$ ($1.29\times$)** on Christmas Day (`2021-12-25`) before dipping **$-36\%$ ($0.64\times$)** mid-week on `2021-12-29` and recovering on New Year's Eve.
+   * **1 January 2022** is shaded and withheld (`NaN`) because daily grid publication coverage steps down from $27.5\%$ to $23.9\%$ due to an upstream sample break — preventing an observation panel change from being misread as holiday travel.
+5. **RQ4 — Diurnal Pulse Across Kapanewon (`figures/kapanewon_diurnal_heatmap.png`):**
+   * In December 2021, urban/campus hubs peak around midday on weekdays (**Gamping** at `12:00 WIB` $\rightarrow$ `11:00 WIB` on weekends; **Depok** at `13:00 WIB`).
+   * Residential commuter rings peak in the evening on weekdays and shift earlier on weekends (**Banguntapan** from `19:00 WIB` $\rightarrow$ `14:00 WIB`; **Kasihan** steady at `20:00 WIB`).
+   * The right panels (`median_pings_per_maid`) serve strictly as a reporting-intensity diagnostic (higher background ping rates in **Seyegan** and **Pakem**, and a synchronous `08:00–10:00 WIB` dip across urban districts) rather than crowd size.
 
 ---
 
-## 5. Checklist Terakhir untuk Akhnaf (Ringan & Tanpa Coding)
+## 5. Final Light Checklist for You (No Coding Needed)
 
-- [ ] Jalankan `git pull` di repo lokalmu.
-- [ ] Unduh [`figures/city_magnets_map.html`](../figures/city_magnets_map.html) dan buka di browser laptop yang akan dipakai presentasi (uji klik kotak 500 m, ganti layer periode, toggle *Major roads*, dan dropdown *Color by*).
-- [ ] Uji buka keempat notebook Colab di `notebooks/` (`facility_pull.ipynb`, `weekday_weekend_ratio.ipynb`, `nataru_timeseries.ipynb`, `kapanewon_diurnal_heatmap.ipynb`) lewat Google Colab (**Runtime → Run all**).
+- [ ] Run `git pull` on your local machine to get the latest `main`.
+- [ ] Open [`figures/city_magnets_map.html`](../figures/city_magnets_map.html) offline in the browser on our presentation laptop (test clicking a 500 m square, switching period layers, toggling *Major roads*, and changing the *Color by* dropdown).
+- [ ] Open the 4 standalone notebooks in Google Colab (`facility_pull.ipynb`, `weekday_weekend_ratio.ipynb`, `nataru_timeseries.ipynb`, `kapanewon_diurnal_heatmap.ipynb`) and verify **Runtime → Run all**.

@@ -28,21 +28,21 @@ Panduan teknis dan perintah untuk membuat ulang visual tersedia di [handoff tekn
 
 ---
 
-## Status Penyelesaian Tim (Update Terbaru — Merged ke `main`)
+## Team Completion Status (Merged to `main`)
 
-Seluruh catatan perbaikan pada tabel di atas beserta tambahan visual RQ1 dari `HANDOFF_ROLE3.md` **sudah selesai diimplementasikan dan di-merge ke `main`**:
+All review items in the table above — plus the RQ1 `facility_pull` visual from `HANDOFF_ROLE3.md` — **have been implemented, verified, and merged to `main`** (see [`docs/HANDOFF_TO_AKHNAF.md`](HANDOFF_TO_AKHNAF.md) for the full summary):
 
-1. **Peta Interaktif (`figures/city_magnets_map.html`):**
-   * ✅ **Jalan utama offline (`src/assets/yogyakarta/roads.geojson`)** dari OpenStreetMap (ODbL) sudah disertakan langsung di dalam HTML, ditambah opsi toggle *Street basemap (online)*.
-   * ✅ **9 landmark lengkap** (6 landmark *Week 1 DIY Audit*: UGM, UNY, RSUP Dr. Sardjito, Pakuwon Mall, Plaza Ambarrukmo, Malioboro Mall + Prambanan, Stasiun Wates, RSUD Wonosari) sudah diberi label dengan arah *tooltip* yang tidak saling bertumpuk.
-2. **Grafik Baru RQ1 (`figures/facility_pull.png` & `notebooks/facility_pull.ipynb`):**
-   * ✅ Menambahkan visualisasi `facility_pull.parquet` (porsi kehadiran hari kerja %, 95% *site-cluster bootstrap CI*, penanda porsi akhir pekan, dan garis referensi *baseline candidates*).
-3. **Grafik Hari Kerja dan Akhir Pekan (`figures/weekday_weekend_ratio.png`):**
-   * ✅ Label **Campuses** sudah disorot tebal (*bold*), garis referensi `1.0` dan *uncertainty interval* dilengkapi kotak legenda di bawah grafik.
-4. **Grafik Natal dan Tahun Baru (`figures/nataru_timeseries.png`):**
-   * ✅ Kata *"normal"* sudah diganti menjadi *"matched same-weekday baseline"*, area **1 Jan break (withheld)** diberi label langsung + kotak legenda *How to read this chart*, dan jumlah *supported cells* ditampilkan di setiap subjudul kategori.
-5. **Heatmap Kapanewon (`figures/kapanewon_diurnal_heatmap.png`):**
-   * ✅ Panel kiri (`Median observed devices`) sudah diberi ruang horizontal lebih lebar (`1.3 : 1.0`) dibanding panel kanan (`Median pings per device`).
-6. **Notebook & Automated Tests (`notebooks/` & `tests/test_role4_visualize.py`):**
-   * ✅ `notebooks/visuals.ipynb` dan keempat notebook Colab sudah dijalankan ulang dengan output gambar tersimpan.
-   * ✅ 8 *contract & guardrail tests* Role 4 ditambahkan (`python -m pytest -q tests/` $\rightarrow$ **40 passed**).
+1. **Interactive Map (`figures/city_magnets_map.html`):**
+   * ✅ **Offline major roads (`src/assets/yogyakarta/roads.geojson`)** from OpenStreetMap (ODbL) are embedded directly in the HTML alongside an optional *Street basemap (online)* toggle.
+   * ✅ **All 9 landmarks** (the 6 *Week 1 DIY Audit* landmarks: UGM, UNY, RSUP Dr. Sardjito, Pakuwon Mall, Plaza Ambarrukmo, Malioboro Mall + Prambanan, Stasiun Wates, RSUD Wonosari) are labeled with non-overlapping tooltip directions.
+2. **New RQ1 Chart (`figures/facility_pull.png` & `notebooks/facility_pull.ipynb`):**
+   * ✅ Visualizes `facility_pull.parquet` (weekday presence share %, 95% site-cluster bootstrap CI, weekend share markers, and baseline candidate reference line).
+3. **Weekday/Weekend Ratio Chart (`figures/weekday_weekend_ratio.png`):**
+   * ✅ **Campuses** is highlighted in bold on the y-axis, and an explicit legend at the bottom explains the bars, 95% site-cluster CIs, single-category diamonds, and `1.0` parity line.
+4. **Christmas & New Year Chart (`figures/nataru_timeseries.png`):**
+   * ✅ Replaced *"normal"* with *"matched same-weekday baseline"*, labeled **`1 Jan break (withheld)`** directly on the chart with a *How to read this chart* legend box, and added supported cell counts to every subplot title.
+5. **Kapanewon Diurnal Heatmap (`figures/kapanewon_diurnal_heatmap.png`):**
+   * ✅ Widened the left panels (`Median observed devices`) relative to the right panels (`Median pings per device`, `1.3 : 1.0`).
+6. **Executed Notebooks & Automated Tests (`notebooks/` & `tests/test_role4_visualize.py`):**
+   * ✅ `notebooks/visuals.ipynb` and all 4 standalone Colab notebooks are executed with saved outputs.
+   * ✅ Added 8 Role 4 contract & guardrail tests (`python -m pytest -q tests/` $\rightarrow$ **40 passed**).
