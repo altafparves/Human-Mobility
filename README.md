@@ -8,7 +8,7 @@
 | :--- | :--- |
 | **Interactive 500 m Map** (GitHub Pages) | https://altafparves.github.io/Human-Mobility/ · [`figures/city_magnets_map.html`](figures/city_magnets_map.html) (offline HTML) |
 | **Demo video** (5-min presentation) | https://youtu.be/YwWwRleElAA |
-| **Colab walkthrough** (Pipeline & visuals) | https://colab.research.google.com/github/altafparves/Human-Mobility/blob/main/notebooks/visuals.ipynb |
+| **Colab walkthrough** (Pipeline & visuals) | [Open the team walkthrough in Colab](https://colab.research.google.com/github/altafparves/Human-Mobility/blob/main/notebooks/city_magnets_team_walkthrough.ipynb) |
 | **Standalone figure Colabs** (RQ1–RQ4) | [`facility_pull`](https://colab.research.google.com/github/altafparves/Human-Mobility/blob/main/notebooks/facility_pull.ipynb) · [`weekday_weekend_ratio`](https://colab.research.google.com/github/altafparves/Human-Mobility/blob/main/notebooks/weekday_weekend_ratio.ipynb) · [`nataru_timeseries`](https://colab.research.google.com/github/altafparves/Human-Mobility/blob/main/notebooks/nataru_timeseries.ipynb) · [`kapanewon_diurnal_heatmap`](https://colab.research.google.com/github/altafparves/Human-Mobility/blob/main/notebooks/kapanewon_diurnal_heatmap.ipynb) |
 | **Documentation** | [`project_brief_city_magnets_yogyakarta_refined.md`](project_brief_city_magnets_yogyakarta_refined.md) · [`docs/`](docs/) ([Stage 1](docs/HANDOFF_ROLE1.md) · [Stage 2](docs/HANDOFF_ROLE2.md) · [Stage 3](docs/HANDOFF_ROLE3.md) · [Stage 4](docs/HANDOFF_ROLE4.md)) |
 | **Dataset** (JogjaPulse on Zenodo) | https://zenodo.org/records/23157460 |
@@ -118,7 +118,7 @@ Human-Mobility/
 │   ├── metrics.py                     # Presence share, weekday/weekend ratios & statistical tests
 │   └── visualize.py                   # Interactive Folium/Leaflet map & static chart generators
 ├── docs/                              # Technical stage documentation (HANDOFF_ROLE1.md .. HANDOFF_ROLE4.md)
-├── notebooks/                         # End-to-end walkthrough (visuals.ipynb) & standalone figure Colabs
+├── notebooks/                         # End-to-end walkthrough (city_magnets_team_walkthrough.ipynb) & standalone figure Colabs
 ├── figures/                           # Exported static charts (.png) & interactive map (city_magnets_map.html)
 ├── tests/                             # Automated data quality & pipeline unit tests (40 contract tests)
 ├── project_brief_city_magnets_yogyakarta_refined.md
