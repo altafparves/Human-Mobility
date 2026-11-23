@@ -1,8 +1,17 @@
 # City Magnets: What Draws the Crowds in Yogyakarta?
 
-**Data Engineering / Human Mobility Project** - Universitas Gadjah Mada (UGM)  
-**Lecturer:** Dr. Widyawan (`widyawan@ugm.ac.id`)  
-**Team:** Akhnaf, Altaf, Nalen, Rafi Busthami
+**Part of the Data Engineering Course - TKIF262404**
+
+Universitas Gadjah Mada (UGM)
+
+**Lecturer:** Dr. Widyawan (`widyawan@ugm.ac.id`)
+
+| Name | Student ID |
+| :--- | :--- |
+| Akhnaf Fawzan Yogatrisna | 24/536720/TK/59561 |
+| Altaf Parves Shua Ilham | 24/536741/TK/59565 |
+| Nalen Raditya Sadewa | 24/536801/TK/59579 |
+| Rafi Busthami | 24/532760/TK/58998 |
 
 | | |
 | :--- | :--- |
@@ -27,7 +36,47 @@ Using anonymized mobile device presence data (**JogjaPulse**) and **OpenStreetMa
 
 ---
 
-## 2. Key Findings & Visual Gallery
+## 2. Architecture & Data Sources
+
+### Data Sources
+
+| Dataset | Granularity | Description | Source |
+| :--- | :--- | :--- | :--- |
+| **JogjaPulse — Daily Grid** | $500\text{ m} \times 500\text{ m}$ cell $\times$ Day | Daily distinct mobile device counts (`n_maids`) across 5,715 cells (Dec 2021 – Apr 2022; $k=5$ privacy threshold). | [Zenodo 23157460](https://zenodo.org/records/23157460) |
+| **JogjaPulse — Hourly Sub-District** | *Kapanewon* $\times$ Hour | Hourly device counts (`n_maids`) and ping volume (`n_pings`) across 78 *kapanewon*. | [Zenodo 23157460](https://zenodo.org/records/23157460) |
+| **OpenStreetMap (OSM)** | Nodes, Ways & Relations | Footprints and locations of urban facilities across DIY (`amenity`, `shop`, `tourism`, `healthcare`, `highway`, `railway`). | [Overpass API](https://overpass-turbo.eu/) |
+
+### Medallion Pipeline
+
+The pipeline turns two different kinds of data into comparable mobility indicators. JogjaPulse reports device activity by grid cell and day or by *kapanewon* and hour. OpenStreetMap describes facilities as points, lines, and polygons. The Silver layer prepares each source at its own granularity and links facilities to grid cells. The Gold layer computes the comparisons that feed the charts and interactive map.
+
+```text
+JogjaPulse daily and hourly CSVs ──→ Bronze ──→ Silver temporal cleaning ─┐
+OpenStreetMap Overpass extracts ───→ Bronze ──→ Silver spatial joins ────┴──→ Gold metrics ──→ Charts + interactive HTML map
+```
+
+#### 1. Bronze · Preserve inputs and record provenance
+
+Keep the original JogjaPulse CSVs and Overpass extracts in `data/raw/`. Ingestion verifies the mobility inputs, writes a unique grid-cell inventory with UTM bounds, and audits the OSM extract against known Yogyakarta landmarks. The pipeline requested a historical OSM snapshot for December 1, 2021. The analysis used a documented current-extract fallback, so some mapped facility footprints or tags may differ from those present during the study period. [Ingestion code](src/ingest.py) · [Stage 1 handoff](docs/HANDOFF_ROLE1.md)
+
+#### 2. Silver · Build reusable temporal and spatial tables
+
+- **Temporal cleaning.** Standardize timestamps to WIB (UTC+7), construct the expected calendar, and flag ordinary weekdays, weekends, the *Nataru* holiday window, and anomalous dates such as March 8, 2022. Keep suppressed or unpublished observations as missing. Divide the data into sampling periods so changes in the device panel stay visible. For ordinary-day comparisons, compute publication coverage separately for weekdays and weekends per cell and period. Both groups must meet the primary 90% threshold. Retain 80% and 95% eligibility flags for sensitivity checks. The main outputs are `mobility_daily_clean.parquet`, `kapanewon_hourly_clean.parquet`, and coverage audit tables. [Temporal cleaning code](src/clean_temporal.py)
+- **Geospatial processing.** Reconstruct the 500 m squares in UTM Zone 49S (`EPSG:32749`), deduplicate OSM features into real-world sites, and intersect site geometries with the grid. Polygon links count when they cover at least 5% of a cell, contain at least 50% of the site, or qualify under the site's home-cell rule. This prevents small boundary overlaps from changing a cell's classification. Store cell-to-site links in `cell_facility_links.parquet` and cell-level classifications, facility flags, and baseline candidacy in `grid_facilities.parquet`. Transit stays a separate flag when classifying single-category and mixed-use destination cells. [Spatial processing code](src/spatial_join.py) · [Stage 2 handoff](docs/HANDOFF_ROLE2.md)
+
+#### 3. Gold · Compute comparable metrics and quantify uncertainty
+
+Join the daily observations to the facility classifications by `cell_id`. Compute daily presence shares using both the published grid and the eligible-cell subset, then calculate weekday-to-weekend ratios from ordinary days within each sampling period. Summarize the ratios and weekday shares by facility category, compare facility cells with matched baseline candidates, and resample whole site clusters for uncertainty intervals because cells from the same site can share activity patterns.
+
+For *Nataru*, compare each event date with ordinary dates on the same day of the week within the same sampling period. Withhold the January 1 estimate because the device sample changed. For hourly profiles, summarize observed devices and pings per device separately so reporting intensity remains visible. The resulting Parquet tables include `cell_metrics.parquet`, `facility_pull.parquet`, `matched_comparison.parquet`, `event_window.parquet`, and `kapanewon_hourly_profile.parquet`. [Metrics code](src/metrics.py) · [Stage 3 handoff](docs/HANDOFF_ROLE3.md)
+
+#### 4. Serve · Generate the figures and interactive map
+
+Generate the four research figures and `figures/city_magnets_map.html` from the prepared tables. The map embeds the grid, boundaries, major roads, and Leaflet so readers can switch sampling periods, inspect individual cells, and compare weekday and weekend publication coverage. GitHub Pages serves the map for browser access. The repository's automated tests cover the layer outputs and visualization rules, including preserving withheld estimates and keeping sampling periods separate. [Visualization code](src/visualize.py) · [Stage 4 handoff](docs/HANDOFF_ROLE4.md) · [Live map](https://altafparves.github.io/Human-Mobility/)
+
+---
+
+## 3. Key Findings & Visual Gallery
 
 All visual outputs are generated deterministically from the Silver and Gold layers via `python -m src.visualize` and verified by **40 automated contract tests** (`python -m pytest -q tests/`).
 
@@ -48,30 +97,6 @@ All visual outputs are generated deterministically from the Silver and Gold laye
 | **RQ4: Diurnal Pulse (*Kapanewon*)** | Across the 10 busiest *kapanewon* ($0\text{–}23\text{ WIB}$), urban/campus hubs peak around midday on weekdays (**Gamping** $12\text{:00 WIB}$, **Depok** $13\text{:00 WIB}$), whereas commuter rings peak in the evening on weekdays and shift earlier on weekends (**Banguntapan** $19\text{:00} \rightarrow 14\text{:00 WIB}$, **Kasihan** $20\text{:00 WIB}$). | [`figures/kapanewon_diurnal_heatmap.png`](figures/kapanewon_diurnal_heatmap.png) |
 
 > **Interactive 500 m Map:** Open the live map at [altafparves.github.io/Human-Mobility](https://altafparves.github.io/Human-Mobility/) (or download [`figures/city_magnets_map.html`](figures/city_magnets_map.html) for 100% offline use). Use the layer control to switch sampling periods or color by weekday/weekend ratio vs. publication coverage, and click any $500\text{ m}$ cell to inspect its metrics and deduplicated OSM facilities.
-
----
-
-## 3. Architecture & Data Sources
-
-### Data Sources
-
-| Dataset | Granularity | Description | Source |
-| :--- | :--- | :--- | :--- |
-| **JogjaPulse — Daily Grid** | $500\text{ m} \times 500\text{ m}$ cell $\times$ Day | Daily distinct mobile device counts (`n_maids`) across 5,715 cells (Dec 2021 – Apr 2022; $k=5$ privacy threshold). | [Zenodo 23157460](https://zenodo.org/records/23157460) |
-| **JogjaPulse — Hourly Sub-District** | *Kapanewon* $\times$ Hour | Hourly device counts (`n_maids`) and ping volume (`n_pings`) across 78 *kapanewon*. | [Zenodo 23157460](https://zenodo.org/records/23157460) |
-| **OpenStreetMap (OSM)** | Nodes, Ways & Relations | Footprints and locations of urban facilities across DIY (`amenity`, `shop`, `tourism`, `healthcare`, `highway`, `railway`). | [Overpass API](https://overpass-turbo.eu/) |
-
-### Medallion Pipeline
-
-```text
-[JogjaPulse CSVs] ──┐
-                    ├──> (1. Bronze / Raw) ──> (2. Silver / Clean & Spatial) ──> (3. Gold / Metrics) ──> [Visuals & Interactive Map]
-[OSM Overpass API] ─┘
-```
-
-1. **Bronze Layer (`data/raw/`):** Immutable JogjaPulse CSVs and Overpass API GeoJSON extracts (historical snapshot targeting `2021-12-01T00:00:00Z` + validation extract).
-2. **Silver Layer (`data/silver/`):** Standardized `WIB (UTC+7)` calendar grid, anomalous date flagging (`2022-03-08`), sampling period segmentation, $\ge 90\%$ publication coverage filtering, `EPSG:32749` (UTM Zone 49S) $500\text{ m}$ grid reconstruction, and deduplicated OSM spatial joins classifying single-category, mixed-use, and baseline cells.
-3. **Gold Layer (`data/gold/`):** Analytical Parquet tables containing daily **Published Presence Share (%)**, within-period **Weekday-to-Weekend Ratios**, matched-weekday **Nataru Event Comparisons**, cluster-robust uncertainty intervals, and hourly *kapanewon* diurnal profiles.
 
 ---
 
