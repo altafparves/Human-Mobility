@@ -4,7 +4,9 @@
 
 Universitas Gadjah Mada (UGM)
 
-**Lecturer:** Dr. Widyawan (`widyawan@ugm.ac.id`)
+**Lecturer:** Widyawan, S.T., M.Sc., Ph.D. (`widyawan@ugm.ac.id`)
+
+**List of Team Members**
 
 | Name | Student ID |
 | :--- | :--- |
@@ -12,6 +14,8 @@ Universitas Gadjah Mada (UGM)
 | Altaf Parves Shua Ilham | 24/536741/TK/59565 |
 | Nalen Raditya Sadewa | 24/536801/TK/59579 |
 | Rafi Busthami | 24/532760/TK/58998 |
+
+**Documentation, Deliverables, and Data Sources**
 
 | | |
 | :--- | :--- |
